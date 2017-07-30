@@ -82,6 +82,7 @@ NEW_COMMAND_DEFINE(CNexusMenuNumIterations)
 NEW_COMMAND_DEFINE(CNexusMenuTreeLimit)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuRatchetSearch , bool)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuGap,            MPLgap_t)
+NEW_COMMAND_DEFINE_CAST(CNexusMenuHold,           int)
 
 NEW_COMMAND_DEFINE(CNexusMenuMainMenu       )
 
@@ -135,6 +136,7 @@ CNexusUserInterface::CNexusUserInterface()
 
     const int   NumIterations [] = {0, 10000000};
     const int   TreeLimit     [] = {0, 10000000};
+	const int	holdLimit	  [] = {0, 10000000};
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Parameters"));
     ConfigMenuBranchSwapType();
@@ -143,6 +145,7 @@ CNexusUserInterface::CNexusUserInterface()
     //CJD FIXME: ConfigMenuCollapseZero();
     m_pMainMenu->AddMenuItem(new CNexusMenuNumIterations    ("numite"        , "Set the number of iterations for a heuristic search", MAKE_INT_VECTOR(NumIterations)));
     m_pMainMenu->AddMenuItem(new CNexusMenuTreeLimit        ("treeLimit"     , "Set the maximum number of trees allowed to be stored in memory", MAKE_INT_VECTOR(TreeLimit)));
+	m_pMainMenu->AddMenuItem(new CNexusMenuHold				("hold"	         , "Set the number of trees to hold during stepwise addition", MAKE_INT_VECTOR(holdLimit)));
     //CJD FIXME: ConfigMenuRatchetSearch();
     ConfigMenuGap();
 
@@ -170,6 +173,7 @@ void CNexusUserInterface::ConfigMenuAddSeqType()
     selections["Closest"] = PAWM_AST_CLOSEST;
     m_pMainMenu->AddMenuItem(new CNexusMenuAddSeqType       ("addSeq"        , "Selects the manner in which branches are added during the generation of starting trees", selections));
 }
+
 /* CJD FIXME:
 void CNexusUserInterface::ConfigMenuCollapseAt()
 {
@@ -776,6 +780,19 @@ bool CNexusUserInterface::fCNexusMenuGap                  (string *value, MPLgap
     if (m_mflHandle)
     {
         m_mflHandle->gapMethod(nMappedVal);
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
+    return true;
+}
+
+bool CNexusUserInterface::fCNexusMenuHold                  (string *value, int nMappedVal)
+{
+    if (m_mflHandle)
+    {
+        m_mflHandle->hold(nMappedVal);
     }
     else
     {

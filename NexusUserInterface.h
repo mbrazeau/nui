@@ -64,6 +64,7 @@ public:
     bool fCNexusMenuTreeLimit      (string *value = NULL, unsigned long nMappedVal = 1);
     //bool fCNexusMenuRatchetSearch  (string *value = NULL, bool nMappedVal = false);
     bool fCNexusMenuGap            (string *value = NULL, MPLgap_t nMappedVal = GAP_MAX);
+	bool fCNexusMenuHold		   (string *value = NULL, int nMappedVal = 1);
 
     bool fCNexusMenuMainMenu       (string *value = NULL, int nMappedVal = -1);
 
