@@ -47,6 +47,7 @@ public:
     bool fCNexusMenuHeuristicSearch(string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuExhaust        (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuBNB            (string *value = NULL, int nMappedVal = -1);
+    bool fCNexusMenuStepwise       (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuBootstrap      (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuJackknife      (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuSTR            (string *value = NULL, int nMappedVal = -1);
@@ -55,7 +56,6 @@ public:
     bool fCNexusMenuCollapse       (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuReport         (string *value = NULL, int nMappedVal = -1);
 
-    bool fCNexusMenuSearchType     (string *value = NULL, PAWM_search_t nMappedVal = PAWM_SEARCH_MAX);
     bool fCNexusMenuBranchSwapType (string *value = NULL, PAWM_bbreak_t nMappedVal = PAWM_BBR_MAX);
     bool fCNexusMenuAddSeqType     (string *value = NULL, PAWM_add_sequence_t nMappedVal = PAWM_AST_MAX);
     //bool fCNexusMenuCollapseAt     (string *value = NULL, mfl_set_collapse_at_t nMappedVal = MFL_SC_MAX);
@@ -77,7 +77,6 @@ protected:
     void PrintIslandData();
     void PrintHsearchData();
 
-    void ConfigMenuSearchType();
     void ConfigMenuBranchSwapType();
     void ConfigMenuAddSeqType();
     //void ConfigMenuCollapseAt();

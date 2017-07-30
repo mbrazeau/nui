@@ -62,6 +62,7 @@ NEW_COMMAND_DEFINE(CNexusMenuChar           )
 NEW_COMMAND_DEFINE(CNexusMenuHeuristicSearch)
 NEW_COMMAND_DEFINE(CNexusMenuExhaust        )
 NEW_COMMAND_DEFINE(CNexusMenuBNB            )
+NEW_COMMAND_DEFINE(CNexusMenuStepwise       )
 NEW_COMMAND_DEFINE(CNexusMenuBootstrap      )
 NEW_COMMAND_DEFINE(CNexusMenuJackknife      )
 NEW_COMMAND_DEFINE(CNexusMenuSTR            )
@@ -73,7 +74,6 @@ NEW_COMMAND_DEFINE(CNexusMenuReport         )
 /*
  * The following actually defines the derived class for each command on the set menu
  */
-NEW_COMMAND_DEFINE_CAST(CNexusMenuSearchType    , PAWM_search_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuBranchSwapType, PAWM_bbreak_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuAddSeqType    , PAWM_add_sequence_t)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseAt    , mfl_set_collapse_at_t)
@@ -123,6 +123,7 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuBNB             ("branchbound"   , "Begin a branch-and-bound search"));
+    m_pMainMenu->AddMenuItem(new CNexusMenuStepwise        ("stepwise"      , "Begin a stepwise search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuBootstrap       ("bootStrap"     , "Begin a bootstrap analysis"));
     m_pMainMenu->AddMenuItem(new CNexusMenuJackknife       ("jackKnife"     , "Begin a jackknife analysis"));
     m_pMainMenu->AddMenuItem(new CNexusMenuSTR             ("reduction"     , "Perform a safe taxonomic reduction"));
@@ -136,7 +137,6 @@ CNexusUserInterface::CNexusUserInterface()
     const int   TreeLimit     [] = {0, 10000000};
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Parameters"));
-    ConfigMenuSearchType();
     ConfigMenuBranchSwapType();
     ConfigMenuAddSeqType();
     //CJD FIXME: ConfigMenuCollapseAt();
@@ -151,16 +151,6 @@ CNexusUserInterface::CNexusUserInterface()
     m_ioLogFiles = new CEditLineHist("nui1234567890", &m_fCommandLog);
     m_ioWorkingDir = new CEditLineHist("nui1234567890", &m_fCommandLog);
     m_ioNumericSubCommands = new CEditLineHist("nui1234567890", &m_fCommandLog);
-}
-
-void CNexusUserInterface::ConfigMenuSearchType()
-{
-    map<const char*, int, ltstr> selections;
-    selections["Exhaustive"] = PAWM_SEARCH_EXHAUSTIVE;
-    selections["BranchBound"] = PAWM_SEARCH_BANDB;
-    selections["Heuristic"] = PAWM_SEARCH_HEURISTIC;
-    selections["Stepwise"] = PAWM_SEARCH_STEPWISE;
-    m_pMainMenu->AddMenuItem(new CNexusMenuSearchType       ("searchType"    , "Set the search type for JK and BTS searches", selections));
 }
 
 void CNexusUserInterface::ConfigMenuBranchSwapType()
@@ -354,6 +344,8 @@ void CNexusUserInterface::CreateHandle()
     {
         m_pNexusParse->m_cChars->WriteStatesForTaxonAsNexus(ss, i, 0, nChar);
     }
+    ss << ";";
+    std::cout << ss.str() << std::endl;
     m_mflHandle->loadMatrix(ss.str());
 }
 
@@ -616,6 +608,7 @@ void CNexusUserInterface::PrintHsearchData()
 
 bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedVal)
 {
+    m_mflHandle->searchType(PAWM_SEARCH_HEURISTIC);
     m_mflHandle->doSearch();
     PrintHsearchData();
     PrintIslandData();
@@ -624,13 +617,22 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
 
 bool CNexusUserInterface::fCNexusMenuExhaust        (string *value, int nMappedVal)
 {
-    cout<<"Not implemented"<<endl;
+    m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
+    m_mflHandle->doSearch();
     return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuBNB            (string *value, int nMappedVal)
 {
-    cout<<"Not implemented"<<endl;
+    m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
+    m_mflHandle->doSearch();
+    return true;
+}
+
+bool CNexusUserInterface::fCNexusMenuStepwise            (string *value, int nMappedVal)
+{
+    m_mflHandle->searchType(PAWM_SEARCH_STEPWISE);
+    m_mflHandle->doSearch();
     return true;
 }
 
@@ -674,12 +676,6 @@ bool CNexusUserInterface::fCNexusMenuReport(string *value, int nMappedVal)
     {
         cout<<"No file is currently open"<<endl;
     }
-    return true;
-}
-
-bool CNexusUserInterface::fCNexusMenuSearchType     (string *value, PAWM_search_t nMappedVal)
-{
-    m_mflHandle->searchType(nMappedVal);
     return true;
 }
 
