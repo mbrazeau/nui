@@ -345,7 +345,6 @@ void CNexusUserInterface::CreateHandle()
         m_pNexusParse->m_cChars->WriteStatesForTaxonAsNexus(ss, i, 0, nChar);
     }
     ss << ";";
-    std::cout << ss.str() << std::endl;
     m_mflHandle->loadMatrix(ss.str());
 }
 
@@ -608,31 +607,59 @@ void CNexusUserInterface::PrintHsearchData()
 
 bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedVal)
 {
-    m_mflHandle->searchType(PAWM_SEARCH_HEURISTIC);
-    m_mflHandle->doSearch();
-    PrintHsearchData();
-    PrintIslandData();
+    if (m_mflHandle)
+    {
+        m_mflHandle->searchType(PAWM_SEARCH_HEURISTIC);
+        m_mflHandle->doSearch();
+        PrintHsearchData();
+        PrintIslandData();
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuExhaust        (string *value, int nMappedVal)
 {
-    m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
-    m_mflHandle->doSearch();
+    if (m_mflHandle)
+    {
+        m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
+        m_mflHandle->doSearch();
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuBNB            (string *value, int nMappedVal)
 {
-    m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
-    m_mflHandle->doSearch();
+    if (m_mflHandle)
+    {
+        m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
+        m_mflHandle->doSearch();
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuStepwise            (string *value, int nMappedVal)
 {
-    m_mflHandle->searchType(PAWM_SEARCH_STEPWISE);
-    m_mflHandle->doSearch();
+    if (m_mflHandle)
+    {
+        m_mflHandle->searchType(PAWM_SEARCH_STEPWISE);
+        m_mflHandle->doSearch();
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
@@ -687,7 +714,14 @@ bool CNexusUserInterface::fCNexusMenuBranchSwapType (string *value, PAWM_bbreak_
 
 bool CNexusUserInterface::fCNexusMenuAddSeqType     (string *value, PAWM_add_sequence_t nMappedVal)
 {
-    m_mflHandle->addSeqType(nMappedVal);
+    if (m_mflHandle)
+    {
+        m_mflHandle->addSeqType(nMappedVal);
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 /*
@@ -706,13 +740,27 @@ bool CNexusUserInterface::fCNexusMenuCollapseZero         (string *value, bool n
 */
 bool CNexusUserInterface::fCNexusMenuNumIterations        (string *value, unsigned long nMappedVal)
 {
-    m_mflHandle->numReps(nMappedVal);
+    if (m_mflHandle)
+    {
+        m_mflHandle->numReps(nMappedVal);
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuTreeLimit        (string *value, unsigned long nMappedVal)
 {
-    m_mflHandle->maxTrees(nMappedVal);
+    if (m_mflHandle)
+    {
+        m_mflHandle->maxTrees(nMappedVal);
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
@@ -725,7 +773,14 @@ bool CNexusUserInterface::fCNexusMenuRatchetSearch        (string *value, bool n
 */
 bool CNexusUserInterface::fCNexusMenuGap                  (string *value, MPLgap_t nMappedVal)
 {
-    m_mflHandle->gapMethod(nMappedVal);
+    if (m_mflHandle)
+    {
+        m_mflHandle->gapMethod(nMappedVal);
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
