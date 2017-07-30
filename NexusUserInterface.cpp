@@ -616,15 +616,10 @@ void CNexusUserInterface::PrintHsearchData()
 
 bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedVal)
 {
-#if 0
-    CJD FIXME:
-    bool ret = mfl_heuristic(m_mflHandle);
-#else
-    bool ret = false;
-#endif
+    m_mflHandle->doSearch();
     PrintHsearchData();
     PrintIslandData();
-    return ret;
+    return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuExhaust        (string *value, int nMappedVal)
