@@ -378,14 +378,27 @@ bool CNexusUserInterface::SaveTranslateTable(myofstream &fSave)
 
 bool CNexusUserInterface::SaveNewickStrings(myofstream &fSave)
 {
-    /* CJD FIXME:
-    int it;
-    char **newicks = mfl_get_saved_trees_newick(m_mflHandle);
-    for (it = 0; newicks[it]; it++)
+    if (m_mflHandle)
     {
-        fSave<<"\t\tTREE Morphy_"<<it+1<<" = "<< newicks[it]<<endl;
+        std::vector<std::string> newicks;
+        if (m_mflHandle->getNewickTrees(newicks) == true)
+        {
+            int cnt = 1;
+            std::vector<std::string>::iterator it;
+            for (it = newicks.begin(); it < newicks.end(); it++)
+            {
+                fSave<<"\t\tTREE Morphy_"<< cnt++ <<" = "<< *it <<endl;
+            }
+        }
+        else
+        {
+            cout<<"Unable to get newick trees"<<endl;
+        }
     }
-    */
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
