@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <sstream>
 #include "NexusMenuData.h"
-#include "mfl.h"
+#include "mpl.h"
 
 CNexusMenuData::CNexusMenuData(string strMenuTitle)
 {
@@ -79,10 +79,6 @@ bool CNexusMenuData::RunSelection(string strInput, CNexusUserInterface *pNexusUs
         catch (const char *e)
         {
             cout<<"NUI Error: "<<e<<endl;
-        }
-        catch (mfl_exception e)
-        {
-            cout<<"MFL Error: "<<e.what()<<endl;
         }
         cout<<endl;
         return bRet;

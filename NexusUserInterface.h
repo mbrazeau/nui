@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "NexusParse.h"
-#include "mfl.h"
+#include "PAWMInterface.hpp"
 #include "EditLineHist.h"
 #include "NexusMenuData.h"
 
@@ -55,22 +55,21 @@ public:
     bool fCNexusMenuCollapse       (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuReport         (string *value = NULL, int nMappedVal = -1);
 
-    bool fCNexusMenuSearchType     (string *value = NULL, mfl_search_t nMappedVal = MFL_ST_MAX);
-    bool fCNexusMenuBranchSwapType (string *value = NULL, mfl_branch_swap_t nMappedVal = MFL_BST_MAX);
-    bool fCNexusMenuAddSeqType     (string *value = NULL, mfl_add_sequence_t nMappedVal = MFL_AST_MAX);
-    bool fCNexusMenuCollapseAt     (string *value = NULL, mfl_set_collapse_at_t nMappedVal = MFL_SC_MAX);
-    bool fCNexusMenuCollapseZero   (string *value = NULL, bool nMappedVal = false);
-    bool fCNexusMenuNumIterations  (string *value = NULL, int nMappedVal = -1);
-    bool fCNexusMenuTreeLimit      (string *value = NULL, int nMappedVal = -1);
-    bool fCNexusMenuRatchetSearch  (string *value = NULL, bool nMappedVal = false);
-    bool fCNexusMenuGap            (string *value = NULL, mfl_gap_t nMappedVal = MFL_GAP_MAX);
+    bool fCNexusMenuSearchType     (string *value = NULL, PAWM_search_t nMappedVal = PAWM_SEARCH_MAX);
+    bool fCNexusMenuBranchSwapType (string *value = NULL, PAWM_bbreak_t nMappedVal = PAWM_BBR_MAX);
+    bool fCNexusMenuAddSeqType     (string *value = NULL, PAWM_add_sequence_t nMappedVal = PAWM_AST_MAX);
+    //bool fCNexusMenuCollapseAt     (string *value = NULL, mfl_set_collapse_at_t nMappedVal = MFL_SC_MAX);
+    //bool fCNexusMenuCollapseZero   (string *value = NULL, bool nMappedVal = false);
+    bool fCNexusMenuNumIterations  (string *value = NULL, unsigned long nMappedVal = 1);
+    bool fCNexusMenuTreeLimit      (string *value = NULL, unsigned long nMappedVal = 1);
+    //bool fCNexusMenuRatchetSearch  (string *value = NULL, bool nMappedVal = false);
+    bool fCNexusMenuGap            (string *value = NULL, MPLgap_t nMappedVal = GAP_MAX);
 
     bool fCNexusMenuMainMenu       (string *value = NULL, int nMappedVal = -1);
 
 protected:
     void DestroyHandle();
     void CreateHandle();
-    bool SetMorphyOpenParams();
     void ChangeMenu(CNexusMenuData *pMenu);
     void Delete(CEditLineHist *pMem);
     bool SaveTranslateTable(myofstream &fSave);
@@ -81,9 +80,9 @@ protected:
     void ConfigMenuSearchType();
     void ConfigMenuBranchSwapType();
     void ConfigMenuAddSeqType();
-    void ConfigMenuCollapseAt();
-    void ConfigMenuCollapseZero();
-    void ConfigMenuRatchetSearch();
+    //void ConfigMenuCollapseAt();
+    //void ConfigMenuCollapseZero();
+    //void ConfigMenuRatchetSearch();
     void ConfigMenuGap();
 
 private:
@@ -94,7 +93,7 @@ private:
     string m_strCwd;
 
     myofstream m_fCommandLog;
-    mfl_handle_t m_mflHandle;
+    PAWM *m_mflHandle;
 
     CEditLineHist *m_ioWorkingDir;
     CEditLineHist *m_ioLogFiles;
