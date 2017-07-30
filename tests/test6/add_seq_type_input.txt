@@ -1,0 +1,8 @@
+open
+Gnathostomes_Nov2010f2.nex
+addseq=dasd
+addseq=AsIs
+addseq=Closest
+addseq=Random
+addseq=Simple
+q

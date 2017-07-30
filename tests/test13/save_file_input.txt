@@ -1,0 +1,6 @@
+open
+Opistho.nex
+heuristic
+sav
+test13/savefile.txt
+q

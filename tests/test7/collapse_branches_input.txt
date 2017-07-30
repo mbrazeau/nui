@@ -1,0 +1,8 @@
+open
+Gnathostomes_Nov2010f2.nex
+collapseat=dfsd
+collapseat
+collapseat=Equal
+collapseat=MaxIs0
+collapseat=MinIs0
+q
