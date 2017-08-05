@@ -301,7 +301,7 @@ bool CNexusUserInterface::fCNexusMenuOpenNexusFile(string *value, int nMappedVal
     {
         if (strFilename.length() == 0)
         {
-            m_ioInputFiles->GetUserInput(" Enter filename: " + m_strCwd, &strFilename);
+            m_ioInputFiles->GetUserInput(" Enter filename: " + m_strCwd, &strFilename, true);
         }
         strFilename = m_strCwd + strFilename;
         m_pNexusParse = new CNexusParse();
@@ -414,7 +414,7 @@ bool CNexusUserInterface::fCNexusMenuSaveFile(string *value, int nMappedVal)
 
     if (strFilename.length() == 0)
     {
-        m_ioLogFiles->GetUserInput(" Enter save filename: " + m_strCwd, &strFilename);
+        m_ioLogFiles->GetUserInput(" Enter save filename: " + m_strCwd, &strFilename, true);
     }
     strFilename = m_strCwd + strFilename;
     fSave.open(strFilename.c_str());
@@ -499,7 +499,7 @@ bool CNexusUserInterface::fCNexusMenuCommandLog     (string *value, int nMappedV
     {
         if (strFilename.length() == 0)
         {
-            m_ioLogFiles->GetUserInput(" Enter log filename: " + m_strCwd, &strFilename);
+            m_ioLogFiles->GetUserInput(" Enter log filename: " + m_strCwd, &strFilename, true);
         }
         strFilename = m_strCwd + strFilename;
        

@@ -8,21 +8,29 @@ public:
 
     {
     }
-    void GetUserInput(string strPrompt, string *strInput)
+    void GetUserInput(string strPrompt, string *strInput, bool filename = false)
     {
-        getUserInput(strPrompt, strInput);
+        getUserInput(strPrompt, strInput, filename);
         if (*m_pfCommandLog)
         {
             (*m_pfCommandLog) << *strInput << endl;
         }
     }
 protected:
-    virtual void getUserInput(string strPrompt, string *strInput) = 0;
+    virtual void getUserInput(string strPrompt, string *strInput, bool filename) = 0;
     myofstream *m_pfCommandLog;
 };
 
 #ifdef _WINDOWS
 #include "editline/readline.h"
+
+static char **my_completion_func(const char *a, int b, int c)
+{
+    char** ret = (char**)malloc(sizeof(char*));
+    ret[0] = 0;
+    return ret;
+}
+
 class CEditLineHist : public CEditLineHistBase
 {
 public:
@@ -31,9 +39,17 @@ public:
     {
     }
 protected:
-    void getUserInput(string strPrompt, string *strInput)
+    void getUserInput(string strPrompt, string *strInput, bool filename)
     {
         char* pLine;
+        if (filename == false)
+        {
+            rl_attempted_completion_function = my_completion_func;
+        }
+        else
+        {
+            rl_attempted_completion_function = NULL;
+        }
         strPrompt.append(" ");
         pLine = readline(strPrompt.c_str());
         if (pLine)
@@ -92,7 +108,7 @@ public:
     }
 
 protected:
-    void getUserInput(string strPrompt, string *strInput)
+    void getUserInput(string strPrompt, string *strInput, bool filename)
     {
         const char *pLine;
         int nCount;
