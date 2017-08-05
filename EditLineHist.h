@@ -1,5 +1,7 @@
 #pragma once
 
+#include "myostream.h"
+
 class CEditLineHistBase
 {
 public:
@@ -64,11 +66,12 @@ protected:
 
 #else
 #include "histedit.h"
-#include "myostream.h"
+#include "readline/readline.h"
 
-const static char *prompt(EditLine *el)
+static char **my_completion_func(const char *a, int b, int c)
 {
-    return " ";
+    rl_attempted_completion_over = 1;
+    return NULL;
 }
 
 class CEditLineHist : public CEditLineHistBase
@@ -83,7 +86,6 @@ public:
         {
             throw "Unable to initialize line editor";
         }
-        el_set(m_pEditLine, EL_PROMPT, &prompt);
         el_set(m_pEditLine, EL_EDITOR, "emacs");
 
         m_pHistory = history_init();
@@ -111,10 +113,18 @@ protected:
     void getUserInput(string strPrompt, string *strInput, bool filename)
     {
         const char *pLine;
-        int nCount;
-        cout<<strPrompt;
-        pLine = el_gets(m_pEditLine, &nCount);
-        if (nCount > 0)
+        if (filename == false)
+        {
+            rl_attempted_completion_function = my_completion_func;
+        }
+        else
+        {
+            rl_attempted_completion_function = NULL;
+        }
+
+        strPrompt.append(" ");
+        pLine = readline(strPrompt.c_str());
+        if (pLine)
         {
             history(m_pHistory, &m_histEvent, H_ENTER, pLine);
             *strInput = pLine;
