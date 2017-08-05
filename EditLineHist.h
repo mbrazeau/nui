@@ -1,5 +1,52 @@
 #pragma once
 
+class CEditLineHistBase
+{
+public:
+    CEditLineHistBase(const char *pgmName, myofstream *fCommandLog)
+        : m_pfCommandLog(fCommandLog)
+
+    {
+    }
+    void GetUserInput(string strPrompt, string *strInput)
+    {
+        getUserInput(strPrompt, strInput);
+        if (*m_pfCommandLog)
+        {
+            (*m_pfCommandLog) << *strInput << endl;
+        }
+    }
+protected:
+    virtual void getUserInput(string strPrompt, string *strInput) = 0;
+    myofstream *m_pfCommandLog;
+};
+
+#ifdef _WINDOWS
+#include "editline/readline.h"
+class CEditLineHist : public CEditLineHistBase
+{
+public:
+    CEditLineHist(const char *pgmName, myofstream *fCommandLog)
+        : CEditLineHistBase(pgmName, fCommandLog)
+    {
+    }
+protected:
+    void getUserInput(string strPrompt, string *strInput)
+    {
+        char* pLine;
+        strPrompt.append(" ");
+        pLine = readline(strPrompt.c_str());
+        if (pLine)
+        {
+            add_history(pLine);
+            *strInput = pLine;
+            strInput->erase(std::remove(strInput->begin(), strInput->end(), '\n'), strInput->end());
+            free(pLine);
+        }
+    }
+};
+
+#else
 #include "histedit.h"
 #include "myostream.h"
 
@@ -8,11 +55,12 @@ const static char *prompt(EditLine *el)
     return " ";
 }
 
-class CEditLineHist
+class CEditLineHist : public CEditLineHistBase
 {
 public:
     typedef char    *(*el_pfunc_t)(EditLine *);
     CEditLineHist(const char *pgmName, myofstream *fCommandLog)
+        : CEditLineHistBase(pgmName, fCommandLog)
     {
         m_pEditLine = el_init(pgmName, stdin, stdout, stderr);
         if (!m_pEditLine)
@@ -29,7 +77,6 @@ public:
         }
         history(m_pHistory, &m_histEvent, H_SETSIZE, 800);
         el_set(m_pEditLine, EL_HIST, history, m_pHistory);
-        m_pfCommandLog = fCommandLog;
     }
 
     ~CEditLineHist()
@@ -44,7 +91,8 @@ public:
         }
     }
 
-    void GetUserInput(string strPrompt, string *strInput)
+protected:
+    void getUserInput(string strPrompt, string *strInput)
     {
         const char *pLine;
         int nCount;
@@ -55,10 +103,6 @@ public:
             history(m_pHistory, &m_histEvent, H_ENTER, pLine);
             *strInput = pLine;
             strInput->erase(std::remove(strInput->begin(), strInput->end(), '\n'), strInput->end());
-            if (*m_pfCommandLog)
-            {
-                (*m_pfCommandLog)<<*strInput<<endl;
-            }            
         }
         else
         {
@@ -66,14 +110,13 @@ public:
             throw "Stardard input failure";            
         }
     }
-protected:
 
     EditLine *m_pEditLine;
     History *m_pHistory;
     HistEvent m_histEvent;
     static string m_strPrompt;
-    myofstream *m_pfCommandLog;
 
 private:
 
 };
+#endif

@@ -21,6 +21,11 @@
  * the class name based on the value of the "type" macro parameter
  */
 
+#ifdef _WINDOWS
+#define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#endif
+
 #define NEW_COMMAND_DEFINE_CAST(type, cast) \
     class type : public CNexusMenuBase \
     { \
@@ -249,7 +254,7 @@ CNexusUserInterface::~CNexusUserInterface()
  */
 void CNexusUserInterface::DoMenu()
 {
-    bool ret;
+    bool ret = true;
     string strInput;
     fCNexusMenuAbout(NULL, 0, false);
     ChangeMenu(m_pMainMenu);
