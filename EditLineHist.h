@@ -1,6 +1,14 @@
 #pragma once
 
 #include "myostream.h"
+#ifdef _WINDOWS
+#include "editline/readline.h"
+#else
+#include "histedit.h"
+#include "readline/readline.h"
+#endif
+
+static char **my_completion_func(const char *a, int b, int c);
 
 class CEditLineHistBase
 {
@@ -10,21 +18,36 @@ public:
 
     {
     }
+    virtual ~CEditLineHistBase() {}
     void GetUserInput(string strPrompt, string *strInput, bool filename = false)
     {
-        getUserInput(strPrompt, strInput, filename);
+        char *pLine;
+        if (filename == false)
+        {
+            rl_attempted_completion_function = my_completion_func;
+        }
+        else
+        {
+            rl_attempted_completion_function = NULL;
+        }
+
+        strPrompt.append(" ");
+        pLine = readline(strPrompt.c_str());
+
+        *strInput = pLine;
+        strInput->erase(std::remove(strInput->begin(), strInput->end(), '\n'), strInput->end());
+        addHistory(pLine);
         if (*m_pfCommandLog)
         {
             (*m_pfCommandLog) << *strInput << endl;
         }
     }
 protected:
-    virtual void getUserInput(string strPrompt, string *strInput, bool filename) = 0;
+    virtual void addHistory(char* pLine) = 0;
     myofstream *m_pfCommandLog;
 };
 
 #ifdef _WINDOWS
-#include "editline/readline.h"
 
 static char **my_completion_func(const char *a, int b, int c)
 {
@@ -41,32 +64,17 @@ public:
     {
     }
 protected:
-    void getUserInput(string strPrompt, string *strInput, bool filename)
+    void addHistory(char* pLine)
     {
-        char* pLine;
-        if (filename == false)
-        {
-            rl_attempted_completion_function = my_completion_func;
-        }
-        else
-        {
-            rl_attempted_completion_function = NULL;
-        }
-        strPrompt.append(" ");
-        pLine = readline(strPrompt.c_str());
         if (pLine)
         {
             add_history(pLine);
-            *strInput = pLine;
-            strInput->erase(std::remove(strInput->begin(), strInput->end(), '\n'), strInput->end());
             free(pLine);
         }
     }
 };
 
 #else
-#include "histedit.h"
-#include "readline/readline.h"
 
 static char **my_completion_func(const char *a, int b, int c)
 {
@@ -110,30 +118,11 @@ public:
     }
 
 protected:
-    void getUserInput(string strPrompt, string *strInput, bool filename)
+    void addHistory(char* pLine)
     {
-        const char *pLine;
-        if (filename == false)
-        {
-            rl_attempted_completion_function = my_completion_func;
-        }
-        else
-        {
-            rl_attempted_completion_function = NULL;
-        }
-
-        strPrompt.append(" ");
-        pLine = readline(strPrompt.c_str());
         if (pLine)
         {
             history(m_pHistory, &m_histEvent, H_ENTER, pLine);
-            *strInput = pLine;
-            strInput->erase(std::remove(strInput->begin(), strInput->end(), '\n'), strInput->end());
-        }
-        else
-        {
-            *strInput = "q";
-            throw "Stardard input failure";            
         }
     }
 
