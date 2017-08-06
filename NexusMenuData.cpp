@@ -118,19 +118,17 @@ string CNexusMenuData::GetPrompt()
     return m_strMenuTitle;
 }
 
-string &CNexusMenuData::ltrim(string &s) 
+static const char* s_whitespace = " \t\n\r\f\v";
+
+string &CNexusMenuData::ltrim(string &s)
 {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
-        return !std::isspace(ch);
-    }));
+    s.erase(0, s.find_first_not_of(s_whitespace));
     return s;
 }
 
-string &CNexusMenuData::rtrim(string &s) 
+string &CNexusMenuData::rtrim(string &s)
 {
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
-        return !std::isspace(ch);
-    }).base(), s.end());
+    s.erase(s.find_last_not_of(s_whitespace) + 1);
     return s;
 }
 
