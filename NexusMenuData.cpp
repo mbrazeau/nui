@@ -158,7 +158,7 @@ vector<string> CNexusMenuData::GetCommandList(string strInput)
 
 void CNexusMenuData::SplitInput(string strInput, string *command, string *value)
 {
-    *command = strInput;
+    *command = trim(strInput);
     size_t index = strInput.find('=');
     if (index != string::npos)
     {
