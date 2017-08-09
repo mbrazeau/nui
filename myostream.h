@@ -1,5 +1,5 @@
 #pragma once
-
+#include <fstream>
 class myofstream : public ofstream
 {
 public:

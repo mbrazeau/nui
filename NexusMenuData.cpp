@@ -5,6 +5,7 @@
 #include <cctype>
 
 #include "NexusMenuData.h"
+#include "EditLineHist.h"
 #include "mpl.h"
 
 CNexusMenuData::CNexusMenuData(string strMenuTitle)
@@ -118,25 +119,6 @@ string CNexusMenuData::GetPrompt()
     return m_strMenuTitle;
 }
 
-static const char* s_whitespace = " \t\n\r\f\v";
-
-string &CNexusMenuData::ltrim(string &s)
-{
-    s.erase(0, s.find_first_not_of(s_whitespace));
-    return s;
-}
-
-string &CNexusMenuData::rtrim(string &s)
-{
-    s.erase(s.find_last_not_of(s_whitespace) + 1);
-    return s;
-}
-
-string &CNexusMenuData::trim(string &s) 
-{
-    return ltrim(rtrim(s));
-}
-
 vector<string> split(const string &s, char delim)
 {
     vector<string> elems;
@@ -158,14 +140,14 @@ vector<string> CNexusMenuData::GetCommandList(string strInput)
 
 void CNexusMenuData::SplitInput(string strInput, string *command, string *value)
 {
-    *command = trim(strInput);
+    *command = CEditLineHistBase::trim(strInput);
     size_t index = strInput.find('=');
     if (index != string::npos)
     {
         *command = strInput.substr(0, index);
         *value = strInput.substr(index+1);
-        trim(*command);
-        trim(*value);
+        CEditLineHistBase::trim(*command);
+        CEditLineHistBase::trim(*value);
     }
 }
 

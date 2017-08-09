@@ -35,13 +35,31 @@ public:
         pLine = readline(strPrompt.c_str());
 
         *strInput = pLine;
-        strInput->erase(std::remove(strInput->begin(), strInput->end(), '\n'), strInput->end());
+        trim(*strInput);
         addHistory(pLine);
         if (*m_pfCommandLog)
         {
             (*m_pfCommandLog) << *strInput << endl;
         }
     }
+
+    static string &ltrim(string &s)
+    {
+        s.erase(0, s.find_first_not_of(" \t\n\r\f\v"));
+        return s;
+    }
+
+    static string &rtrim(string &s)
+    {
+        s.erase(s.find_last_not_of(" \t\n\r\f\v") + 1);
+        return s;
+    }
+
+    static string &trim(string &s)
+    {
+        return ltrim(rtrim(s));
+    }
+
 protected:
     virtual void addHistory(char* pLine) = 0;
     myofstream *m_pfCommandLog;
