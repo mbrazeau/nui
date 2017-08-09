@@ -140,14 +140,14 @@ vector<string> CNexusMenuData::GetCommandList(string strInput)
 
 void CNexusMenuData::SplitInput(string strInput, string *command, string *value)
 {
-    *command = CEditLineHistBase::trim(strInput);
+    *command = CEditLineHist::trim(strInput);
     size_t index = strInput.find('=');
     if (index != string::npos)
     {
         *command = strInput.substr(0, index);
         *value = strInput.substr(index+1);
-        CEditLineHistBase::trim(*command);
-        CEditLineHistBase::trim(*value);
+        CEditLineHist::trim(*command);
+        CEditLineHist::trim(*value);
     }
 }
 
