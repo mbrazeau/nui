@@ -310,7 +310,7 @@ bool CNexusUserInterface::fCNexusMenuOpenNexusFile(string *value, int nMappedVal
             if (m_pNexusParse->ReadNexusFile(&strFilename, NULL))
             {
                 CreateHandle();
-                cout<<" "<<strFilename<<" open successfully"<<endl;
+                cout<<" "<<strFilename<<" opened successfully"<<endl;
             }
             else
             {
