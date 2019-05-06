@@ -79,14 +79,14 @@ NEW_COMMAND_DEFINE(CNexusMenuReport         )
 /*
  * The following actually defines the derived class for each command on the set menu
  */
-NEW_COMMAND_DEFINE_CAST(CNexusMenuBranchSwapType, PAWM_bbreak_t)
-NEW_COMMAND_DEFINE_CAST(CNexusMenuAddSeqType    , PAWM_add_sequence_t)
+NEW_COMMAND_DEFINE_CAST(CNexusMenuBranchSwapType, mpl_bbreak_t)
+NEW_COMMAND_DEFINE_CAST(CNexusMenuAddSeqType    , mpl_addseq_t)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseAt    , mfl_set_collapse_at_t)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseZero  , bool)
 NEW_COMMAND_DEFINE(CNexusMenuNumIterations)
 NEW_COMMAND_DEFINE(CNexusMenuTreeLimit)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuRatchetSearch , bool)
-NEW_COMMAND_DEFINE_CAST(CNexusMenuGap,            MPLgap_t)
+NEW_COMMAND_DEFINE_CAST(CNexusMenuGap,            mpl_gap_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuHold,           int)
 
 NEW_COMMAND_DEFINE(CNexusMenuMainMenu       )
@@ -164,18 +164,18 @@ CNexusUserInterface::CNexusUserInterface()
 void CNexusUserInterface::ConfigMenuBranchSwapType()
 {
     map<const char*, int, ltstr> selections;
-    selections["TreeBisection"] = PAWM_BBR_TBR;
-    selections["SubtreePruning"] = PAWM_BBR_SPR;
+    selections["TreeBisection"] = MPL_TBR_T;
+    selections["SubtreePruning"] = MPL_SPR_T;
     m_pMainMenu->AddMenuItem(new CNexusMenuBranchSwapType   ("branchSwap"    , "Set branch swap type for heuristic searches", selections));
 }
 
 void CNexusUserInterface::ConfigMenuAddSeqType()
 {
     map<const char*, int, ltstr> selections;
-    selections["Simple"] = PAWM_AST_SIMPLE;
-    selections["Random"] = PAWM_AST_RANDOM;
-    selections["AsIs"] = PAWM_AST_ASIS;
-    selections["Closest"] = PAWM_AST_CLOSEST;
+//    selections["Simple"] = PAWM_AST_SIMPLE;
+    selections["Random"] = MPL_AST_RANDOM;
+    selections["AsIs"] = MPL_AST_ASIS;
+//    selections["Closest"] = PAWM_AST_CLOSEST;
     m_pMainMenu->AddMenuItem(new CNexusMenuAddSeqType       ("addSeq"        , "Selects the manner in which branches are added during the generation of starting trees", selections));
 }
 
@@ -334,8 +334,9 @@ void CNexusUserInterface::DestroyHandle()
 {
     if (m_mflHandle)
     {
-        delete m_mflHandle;
-        m_mflHandle = NULL;
+//        delete m_mflHandle;
+//        m_mflHandle = NULL;
+        mpl_handle_delete(&m_mflHandle);
     }
 }
 
@@ -348,13 +349,15 @@ void CNexusUserInterface::CreateHandle()
     int nChar = m_pNexusParse->m_cChars->GetNCharTotal();
     int i;
 
-    m_mflHandle = new PAWM(nTax, nChar);
+    m_mflHandle = mpl_handle_new();//new PAWM(nTax, nChar);
     for (i = 0; i < nTax; i++)
     {
         m_pNexusParse->m_cChars->WriteStatesForTaxonAsNexus(ss, i, 0, nChar);
     }
     ss << ";";
-    m_mflHandle->loadMatrix(ss.str());
+    
+    // TODO: Make this add data to the MPL struct?
+    //m_mflHandle->loadMatrix(ss.str());
 }
 
 bool CNexusUserInterface::SaveTranslateTable(myofstream &fSave)
@@ -383,27 +386,28 @@ bool CNexusUserInterface::SaveTranslateTable(myofstream &fSave)
 
 bool CNexusUserInterface::SaveNewickStrings(myofstream &fSave)
 {
-    if (m_mflHandle)
-    {
-        std::vector<std::string> newicks;
-        if (m_mflHandle->getNewickTrees(newicks) == true)
-        {
-            int cnt = 1;
-            std::vector<std::string>::iterator it;
-            for (it = newicks.begin(); it < newicks.end(); it++)
-            {
-                fSave<<"\t\tTREE Morphy_"<< cnt++ <<" = "<< *it <<endl;
-            }
-        }
-        else
-        {
-            cout<<"Unable to get newick trees"<<endl;
-        }
-    }
-    else
-    {
-        cout<<"No file open"<<endl;
-    }
+    // TODO: Re-implement
+//    if (m_mflHandle)
+//    {
+//        std::vector<std::string> newicks;
+//        if (m_mflHandle->getNewickTrees(newicks) == true)
+//        {
+//            int cnt = 1;
+//            std::vector<std::string>::iterator it;
+//            for (it = newicks.begin(); it < newicks.end(); it++)
+//            {
+//                fSave<<"\t\tTREE Morphy_"<< cnt++ <<" = "<< *it <<endl;
+//            }
+//        }
+//        else
+//        {
+//            cout<<"Unable to get newick trees"<<endl;
+//        }
+//    }
+//    else
+//    {
+//        cout<<"No file open"<<endl;
+//    }
     return true;
 }
 
@@ -631,8 +635,10 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
 {
     if (m_mflHandle)
     {
-        m_mflHandle->searchType(PAWM_SEARCH_HEURISTIC);
-        m_mflHandle->doSearch();
+        // TODO: Make sure this is straightened out
+//        m_mflHandle->searchType(PAWM_SEARCH_HEURISTIC);
+//        m_mflHandle->doSearch();
+        mpl_do_search(m_mflHandle);
         PrintHsearchData();
         PrintIslandData();
     }
@@ -645,43 +651,51 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
 
 bool CNexusUserInterface::fCNexusMenuExhaust        (string *value, int nMappedVal)
 {
-    if (m_mflHandle)
-    {
-        m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
-        m_mflHandle->doSearch();
-    }
-    else
-    {
-        cout<<"No file open"<<endl;
-    }
+    // TODO: Exhaustive probably will never be implemented
+    cout<<"Not implemented"<<endl;
+    return true;
+//    if (m_mflHandle)
+//    {
+//        m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
+//        m_mflHandle->doSearch();
+//    }
+//    else
+//    {
+//        cout<<"No file open"<<endl;
+//    }
     return true;
 }
 
+// TODO: Implement this one day
 bool CNexusUserInterface::fCNexusMenuBNB            (string *value, int nMappedVal)
 {
-    if (m_mflHandle)
-    {
-        m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
-        m_mflHandle->doSearch();
-    }
-    else
-    {
-        cout<<"No file open"<<endl;
-    }
+    cout<<"Not implemented"<<endl;
+    return true;
+//    if (m_mflHandle)
+//    {
+//        m_mflHandle->searchType(PAWM_SEARCH_EXHAUSTIVE);
+//        m_mflHandle->doSearch();
+//    }
+//    else
+//    {
+//        cout<<"No file open"<<endl;
+//    }
     return true;
 }
 
 bool CNexusUserInterface::fCNexusMenuStepwise            (string *value, int nMappedVal)
 {
-    if (m_mflHandle)
-    {
-        m_mflHandle->searchType(PAWM_SEARCH_STEPWISE);
-        m_mflHandle->doSearch();
-    }
-    else
-    {
-        cout<<"No file open"<<endl;
-    }
+    cout<<"Not implemented"<<endl;
+    return true;
+//    if (m_mflHandle)
+//    {
+//        m_mflHandle->searchType(PAWM_SEARCH_STEPWISE);
+//        m_mflHandle->doSearch();
+//    }
+//    else
+//    {
+//        cout<<"No file open"<<endl;
+//    }
     return true;
 }
 
@@ -728,17 +742,18 @@ bool CNexusUserInterface::fCNexusMenuReport(string *value, int nMappedVal)
     return true;
 }
 
-bool CNexusUserInterface::fCNexusMenuBranchSwapType (string *value, PAWM_bbreak_t nMappedVal)
+bool CNexusUserInterface::fCNexusMenuBranchSwapType (string *value, mpl_bbreak_t nMappedVal)
 {
     // CJD FIXME: mfl_set_parameter(m_mflHandle, MFL_PT_BRANCH_SWAP_TYPE, (void*)nMappedVal);
     return true;
 }
 
-bool CNexusUserInterface::fCNexusMenuAddSeqType     (string *value, PAWM_add_sequence_t nMappedVal)
+bool CNexusUserInterface::fCNexusMenuAddSeqType     (string *value, mpl_addseq_t nMappedVal)
 {
     if (m_mflHandle)
     {
-        m_mflHandle->addSeqType(nMappedVal);
+//        m_mflHandle->addSeqType(nMappedVal);
+        mpl_set_addseq(nMappedVal, m_mflHandle);
     }
     else
     {
@@ -764,7 +779,8 @@ bool CNexusUserInterface::fCNexusMenuNumIterations        (string *value, unsign
 {
     if (m_mflHandle)
     {
-        m_mflHandle->numReps(nMappedVal);
+        //m_mflHandle->numReps(nMappedVal);
+        mpl_set_numreps(nMappedVal, m_mflHandle);
     }
     else
     {
@@ -777,7 +793,8 @@ bool CNexusUserInterface::fCNexusMenuTreeLimit        (string *value, unsigned l
 {
     if (m_mflHandle)
     {
-        m_mflHandle->maxTrees(nMappedVal);
+//        m_mflHandle->maxTrees(nMappedVal);
+        mpl_set_maxtrees(nMappedVal, m_mflHandle);
     }
     else
     {
@@ -793,11 +810,12 @@ bool CNexusUserInterface::fCNexusMenuRatchetSearch        (string *value, bool n
     return true;
 }
 */
-bool CNexusUserInterface::fCNexusMenuGap                  (string *value, MPLgap_t nMappedVal)
+bool CNexusUserInterface::fCNexusMenuGap                  (string *value, mpl_gap_t nMappedVal)
 {
     if (m_mflHandle)
     {
-        m_mflHandle->gapMethod(nMappedVal);
+//        m_mflHandle->gapMethod(nMappedVal);
+        mpl_set_gap_handl(nMappedVal, m_mflHandle);
     }
     else
     {
@@ -810,7 +828,8 @@ bool CNexusUserInterface::fCNexusMenuHold                  (string *value, int n
 {
     if (m_mflHandle)
     {
-        m_mflHandle->hold(nMappedVal);
+//        m_mflHandle->hold(nMappedVal);
+        mpl_set_hold(nMappedVal, m_mflHandle);
     }
     else
     {
