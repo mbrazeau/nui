@@ -83,7 +83,7 @@ NEW_COMMAND_DEFINE_CAST(CNexusMenuBranchSwapType, mpl_bbreak_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuAddSeqType    , mpl_addseq_t)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseAt    , mfl_set_collapse_at_t)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseZero  , bool)
-NEW_COMMAND_DEFINE(CNexusMenuNumIterations)
+NEW_COMMAND_DEFINE(CNexusMenuNumReplicates)
 NEW_COMMAND_DEFINE(CNexusMenuTreeLimit)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuRatchetSearch , bool)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuGap,            mpl_gap_t)
@@ -148,7 +148,7 @@ CNexusUserInterface::CNexusUserInterface()
     ConfigMenuAddSeqType();
     //CJD FIXME: ConfigMenuCollapseAt();
     //CJD FIXME: ConfigMenuCollapseZero();
-    m_pMainMenu->AddMenuItem(new CNexusMenuNumIterations    ("numite"        , "Set the number of iterations for a heuristic search", MAKE_INT_VECTOR(NumIterations)));
+    m_pMainMenu->AddMenuItem(new CNexusMenuNumReplicates    ("nreps"         , "Set the number of replications for a heuristic search", MAKE_INT_VECTOR(NumIterations)));
     m_pMainMenu->AddMenuItem(new CNexusMenuTreeLimit        ("treeLimit"     , "Set the maximum number of trees allowed to be stored in memory", MAKE_INT_VECTOR(TreeLimit)));
 	m_pMainMenu->AddMenuItem(new CNexusMenuHold				("hold"	         , "Set the number of trees to hold during stepwise addition", MAKE_INT_VECTOR(holdLimit)));
     //CJD FIXME: ConfigMenuRatchetSearch();
@@ -779,7 +779,7 @@ bool CNexusUserInterface::fCNexusMenuCollapseZero         (string *value, bool n
     return true;
 }
 */
-bool CNexusUserInterface::fCNexusMenuNumIterations        (string *value, unsigned long nMappedVal)
+bool CNexusUserInterface::fCNexusMenuNumReplicates        (string *value, unsigned long nMappedVal)
 {
     if (m_mflHandle)
     {

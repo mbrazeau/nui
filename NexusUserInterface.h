@@ -60,7 +60,7 @@ public:
     bool fCNexusMenuAddSeqType     (string *value = NULL, mpl_addseq_t nMappedVal = MPL_AST_MAX);
     //bool fCNexusMenuCollapseAt     (string *value = NULL, mfl_set_collapse_at_t nMappedVal = MFL_SC_MAX);
     //bool fCNexusMenuCollapseZero   (string *value = NULL, bool nMappedVal = false);
-    bool fCNexusMenuNumIterations  (string *value = NULL, unsigned long nMappedVal = 1);
+    bool fCNexusMenuNumReplicates  (string *value = NULL, unsigned long nMappedVal = 1);
     bool fCNexusMenuTreeLimit      (string *value = NULL, unsigned long nMappedVal = 1);
     //bool fCNexusMenuRatchetSearch  (string *value = NULL, bool nMappedVal = false);
     bool fCNexusMenuGap            (string *value = NULL, mpl_gap_t nMappedVal = GAP_MAX);
