@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "NexusParse.h"
-//#include "PAWMInterface.hpp"
 #include "mpl.h"
 #include "EditLineHist.h"
 #include "NexusMenuData.h"
