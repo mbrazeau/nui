@@ -219,7 +219,7 @@ void CNexusUserInterface::ConfigMenuGap()
 void CNexusUserInterface::ChangeMenu(CNexusMenuData *pMenu)
 {
     m_pMenu = pMenu;
-    fCNexusMenuHelp(NULL, 0, false);
+//    fCNexusMenuHelp(NULL, 0, false);
 }
 
 void CNexusUserInterface::Delete(CEditLineHist *pMem)
@@ -348,16 +348,21 @@ void CNexusUserInterface::CreateHandle()
     int nTax = m_pNexusParse->m_cTaxa->GetNTax();
     int nChar = m_pNexusParse->m_cChars->GetNCharTotal();
     int i;
+    std::string tmp;
+    const char* cstr;
 
     m_mflHandle = mpl_handle_new();//new PAWM(nTax, nChar);
+    mpl_set_dimensions(nTax, nChar, m_mflHandle);
     for (i = 0; i < nTax; i++)
     {
         m_pNexusParse->m_cChars->WriteStatesForTaxonAsNexus(ss, i, 0, nChar);
     }
     ss << ";";
     
-    // TODO: Make this add data to the MPL struct?
-    //m_mflHandle->loadMatrix(ss.str());
+    tmp = ss.str();
+    cstr = tmp.c_str();
+    
+    mpl_attach_rawdata(MPL_DISCR_T, cstr, m_mflHandle);
 }
 
 bool CNexusUserInterface::SaveTranslateTable(myofstream &fSave)
@@ -486,8 +491,9 @@ bool CNexusUserInterface::fCNexusMenuQuit           (string *value, int nMappedV
 bool CNexusUserInterface::fCNexusMenuAbout          (string *value, int nMappedVal, bool bShowBuildTime)
 {
     cout<<"Morphy NUI Version: "<<NUI_MAJOR_VERSION<<"."<<NUI_MINOR_VERSION<<endl;
-    cout<<"Copyright 2012 (C) Martin Brazeau and Chris Desjardins. All rights reserved."<<endl;
-    cout<<"This program uses the NCL by Paul O. Lewis."<<endl;
+    cout<<"Copyright 2019 (C) Martin Brazeau and Chris Desjardins. All rights reserved."<<endl;
+    cout<<"This program uses the NCL by Paul O. Lewis."<<endl<<endl;
+    cout<<"For a list of commands enter the command \"help\""<<endl<<endl;
     if (bShowBuildTime)
     {
         cout<<"Build time: "<<__DATE__<<" "<<__TIME__<<endl;
@@ -636,8 +642,6 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
     if (m_mflHandle)
     {
         // TODO: Make sure this is straightened out
-//        m_mflHandle->searchType(PAWM_SEARCH_HEURISTIC);
-//        m_mflHandle->doSearch();
         mpl_do_search(m_mflHandle);
         PrintHsearchData();
         PrintIslandData();
