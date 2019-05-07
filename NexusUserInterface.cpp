@@ -65,6 +65,7 @@ NEW_COMMAND_DEFINE(CNexusMenuIngroup        )
 NEW_COMMAND_DEFINE(CNexusMenuChar           )
 
 NEW_COMMAND_DEFINE(CNexusMenuHeuristicSearch)
+NEW_COMMAND_DEFINE(CNexusMenuRatchetSearch  )
 NEW_COMMAND_DEFINE(CNexusMenuExhaust        )
 NEW_COMMAND_DEFINE(CNexusMenuBNB            )
 NEW_COMMAND_DEFINE(CNexusMenuStepwise       )
@@ -127,6 +128,7 @@ CNexusUserInterface::CNexusUserInterface()
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Analysis"));
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));
+    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Begin a ratchet search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuBNB             ("branchbound"   , "Begin a branch-and-bound search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuStepwise        ("stepwise"      , "Begin a stepwise search"));
@@ -139,7 +141,7 @@ CNexusUserInterface::CNexusUserInterface()
     //m_pMainMenu->AddMenuItem(new CNexusMenuCollapse        ("collapse"      , "Collapse zero-length branches, condense the tree set"));
     m_pMainMenu->AddMenuItem(new CNexusMenuReport          ("report"        , "Print a report about the current open nexus file"));
 
-    const int   NumIterations [] = {0, 10000000};
+    const int   NumReps       [] = {0, 10000000};
     const int   TreeLimit     [] = {0, 10000000};
 	const int	holdLimit	  [] = {0, 10000000};
 
@@ -148,7 +150,7 @@ CNexusUserInterface::CNexusUserInterface()
     ConfigMenuAddSeqType();
     //CJD FIXME: ConfigMenuCollapseAt();
     //CJD FIXME: ConfigMenuCollapseZero();
-    m_pMainMenu->AddMenuItem(new CNexusMenuNumReplicates    ("nreps"         , "Set the number of replications for a heuristic search", MAKE_INT_VECTOR(NumIterations)));
+    m_pMainMenu->AddMenuItem(new CNexusMenuNumReplicates    ("nreps"         , "Set the number of replications for a heuristic search", MAKE_INT_VECTOR(NumReps)));
     m_pMainMenu->AddMenuItem(new CNexusMenuTreeLimit        ("treeLimit"     , "Set the maximum number of trees allowed to be stored in memory", MAKE_INT_VECTOR(TreeLimit)));
 	m_pMainMenu->AddMenuItem(new CNexusMenuHold				("hold"	         , "Set the number of trees to hold during stepwise addition", MAKE_INT_VECTOR(holdLimit)));
     //CJD FIXME: ConfigMenuRatchetSearch();
@@ -490,6 +492,7 @@ bool CNexusUserInterface::fCNexusMenuQuit           (string *value, int nMappedV
 
 bool CNexusUserInterface::fCNexusMenuAbout          (string *value, int nMappedVal, bool bShowBuildTime)
 {
+    cout<<endl;
     cout<<"Morphy NUI Version: "<<NUI_MAJOR_VERSION<<"."<<NUI_MINOR_VERSION<<endl;
     cout<<"Copyright 2019 (C) Martin Brazeau and Chris Desjardins. All rights reserved."<<endl;
     cout<<"This program uses the NCL by Paul O. Lewis."<<endl<<endl;
@@ -653,6 +656,26 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
     return true;
 }
 
+
+bool CNexusUserInterface::fCNexusMenuRatchetSearch(string *value, int nMappedVal)
+{
+    cout<<"Not implemented"<<endl;
+    return true;
+    
+    if (m_mflHandle)
+    {
+        // TODO: Make sure this is straightened out
+        mpl_do_search(m_mflHandle);
+        PrintHsearchData();
+        PrintIslandData();
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
+    return true;
+}
+
 bool CNexusUserInterface::fCNexusMenuExhaust        (string *value, int nMappedVal)
 {
     // TODO: Exhaustive probably will never be implemented
@@ -783,7 +806,6 @@ bool CNexusUserInterface::fCNexusMenuNumReplicates        (string *value, unsign
 {
     if (m_mflHandle)
     {
-        //m_mflHandle->numReps(nMappedVal);
         mpl_set_numreps(nMappedVal, m_mflHandle);
     }
     else
