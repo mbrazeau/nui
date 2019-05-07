@@ -65,7 +65,6 @@ NEW_COMMAND_DEFINE(CNexusMenuIngroup        )
 NEW_COMMAND_DEFINE(CNexusMenuChar           )
 
 NEW_COMMAND_DEFINE(CNexusMenuHeuristicSearch)
-NEW_COMMAND_DEFINE(CNexusMenuRatchetSearch  )
 NEW_COMMAND_DEFINE(CNexusMenuExhaust        )
 NEW_COMMAND_DEFINE(CNexusMenuBNB            )
 NEW_COMMAND_DEFINE(CNexusMenuStepwise       )
@@ -82,6 +81,7 @@ NEW_COMMAND_DEFINE(CNexusMenuReport         )
  */
 NEW_COMMAND_DEFINE_CAST(CNexusMenuBranchSwapType, mpl_bbreak_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuAddSeqType    , mpl_addseq_t)
+NEW_COMMAND_DEFINE_CAST(CNexusMenuRatchetSearch , bool)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseAt    , mfl_set_collapse_at_t)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseZero  , bool)
 NEW_COMMAND_DEFINE(CNexusMenuNumReplicates)
@@ -128,7 +128,7 @@ CNexusUserInterface::CNexusUserInterface()
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Analysis"));
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Begin a ratchet search"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Begin a ratchet search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuBNB             ("branchbound"   , "Begin a branch-and-bound search"));
     m_pMainMenu->AddMenuItem(new CNexusMenuStepwise        ("stepwise"      , "Begin a stepwise search"));
@@ -148,6 +148,7 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Parameters"));
     ConfigMenuBranchSwapType();
     ConfigMenuAddSeqType();
+    ConfigMenuRatchetSearch();
     //CJD FIXME: ConfigMenuCollapseAt();
     //CJD FIXME: ConfigMenuCollapseZero();
     m_pMainMenu->AddMenuItem(new CNexusMenuNumReplicates    ("nreps"         , "Set the number of replications for a heuristic search", MAKE_INT_VECTOR(NumReps)));
@@ -200,15 +201,16 @@ void CNexusUserInterface::ConfigMenuCollapseZero()
     m_pMainMenu->AddMenuItem(new CNexusMenuCollapseZero     ("collapseZero"  , "Enable collapsing of zero length branches during search", selections));
 }
 */
-/* CJD FIXME:
+/* CJD FIXME:*/
+// MDB: Fixed?
 void CNexusUserInterface::ConfigMenuRatchetSearch()
 {
     map<const char*, int, ltstr> selections;
-    selections["Enable"] = true;
-    selections["Disable"] = false;
+    selections["Yes"] = true;
+    selections["No"] = false;
     m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch    ("ratchet"       , "Set the ratchet search parameter", selections));
 }
-*/
+
 void CNexusUserInterface::ConfigMenuGap()
 {
     map<const char*, int, ltstr> selections;
@@ -394,27 +396,28 @@ bool CNexusUserInterface::SaveTranslateTable(myofstream &fSave)
 bool CNexusUserInterface::SaveNewickStrings(myofstream &fSave)
 {
     // TODO: Re-implement
-//    if (m_mflHandle)
-//    {
-//        std::vector<std::string> newicks;
-//        if (m_mflHandle->getNewickTrees(newicks) == true)
-//        {
-//            int cnt = 1;
-//            std::vector<std::string>::iterator it;
-//            for (it = newicks.begin(); it < newicks.end(); it++)
-//            {
-//                fSave<<"\t\tTREE Morphy_"<< cnt++ <<" = "<< *it <<endl;
-//            }
-//        }
-//        else
-//        {
-//            cout<<"Unable to get newick trees"<<endl;
-//        }
-//    }
-//    else
-//    {
-//        cout<<"No file open"<<endl;
-//    }
+    if (m_mflHandle)
+    {
+        std::vector<std::string> newicks;
+        if (mpl_get_num_trees(m_mflHandle) > 0)
+        {
+            int i = 0;
+            for (i = 0; i < mpl_get_num_trees(m_mflHandle); i++)
+            {
+                char* newick = mpl_get_newick(i, m_mflHandle);
+                fSave<<"\t\tTREE Morphy_"<< i+1 <<" = [&U] " << newick <<endl;
+                // TODO: Free the string
+            }
+        }
+        else
+        {
+            cout<<"Unable to get newick trees"<<endl;
+        }
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
     return true;
 }
 
@@ -656,26 +659,6 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
     return true;
 }
 
-
-bool CNexusUserInterface::fCNexusMenuRatchetSearch(string *value, int nMappedVal)
-{
-    cout<<"Not implemented"<<endl;
-    return true;
-    
-    if (m_mflHandle)
-    {
-        // TODO: Make sure this is straightened out
-        mpl_do_search(m_mflHandle);
-        PrintHsearchData();
-        PrintIslandData();
-    }
-    else
-    {
-        cout<<"No file open"<<endl;
-    }
-    return true;
-}
-
 bool CNexusUserInterface::fCNexusMenuExhaust        (string *value, int nMappedVal)
 {
     // TODO: Exhaustive probably will never be implemented
@@ -829,13 +812,14 @@ bool CNexusUserInterface::fCNexusMenuTreeLimit        (string *value, unsigned l
     return true;
 }
 
-/* CJD FIXME:
+/* CJD FIXME:*/
+// MDB: Fixed?
 bool CNexusUserInterface::fCNexusMenuRatchetSearch        (string *value, bool nMappedVal)
 {
-    mfl_set_parameter(m_mflHandle, MFL_PT_RATCHET_SEARCH, (void*)nMappedVal);
+    mpl_use_ratchet(nMappedVal, m_mflHandle);
     return true;
 }
-*/
+
 bool CNexusUserInterface::fCNexusMenuGap                  (string *value, mpl_gap_t nMappedVal)
 {
     if (m_mflHandle)

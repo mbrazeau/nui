@@ -45,7 +45,6 @@ public:
     bool fCNexusMenuSet            (string *value = NULL, int nMappedVal = -1);
                
     bool fCNexusMenuHeuristicSearch(string *value = NULL, int nMappedVal = -1);
-    bool fCNexusMenuRatchetSearch  (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuExhaust        (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuBNB            (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuStepwise       (string *value = NULL, int nMappedVal = -1);
@@ -59,6 +58,7 @@ public:
 
     bool fCNexusMenuBranchSwapType (string *value = NULL, mpl_bbreak_t nMappedVal = MPL_BBREAK_MAX);
     bool fCNexusMenuAddSeqType     (string *value = NULL, mpl_addseq_t nMappedVal = MPL_AST_MAX);
+    bool fCNexusMenuRatchetSearch  (string *value = NULL, bool useRatchet = false);
     //bool fCNexusMenuCollapseAt     (string *value = NULL, mfl_set_collapse_at_t nMappedVal = MFL_SC_MAX);
     //bool fCNexusMenuCollapseZero   (string *value = NULL, bool nMappedVal = false);
     bool fCNexusMenuNumReplicates  (string *value = NULL, unsigned long nMappedVal = 1);
@@ -83,7 +83,7 @@ protected:
     void ConfigMenuAddSeqType();
     //void ConfigMenuCollapseAt();
     //void ConfigMenuCollapseZero();
-    //void ConfigMenuRatchetSearch();
+    void ConfigMenuRatchetSearch();
     void ConfigMenuGap();
 
 private:
