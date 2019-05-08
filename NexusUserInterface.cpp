@@ -101,7 +101,7 @@ CNexusUserInterface::CNexusUserInterface()
     m_mflHandle = NULL;
     m_pNexusParse = NULL;
     m_strCwd = "./";
-    m_pMainMenu = new CNexusMenuData("#");
+    m_pMainMenu = new CNexusMenuData("morphy>");
     if (!m_pMainMenu)
     {
         throw "Unable to allocate memory for main menu";
