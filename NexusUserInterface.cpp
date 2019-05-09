@@ -178,6 +178,7 @@ void CNexusUserInterface::ConfigMenuAddSeqType()
 //    selections["Simple"] = PAWM_AST_SIMPLE;
     selections["Random"] = MPL_AST_RANDOM;
     selections["AsIs"] = MPL_AST_ASIS;
+    selections["None"] = MPL_AST_INMEM;
 //    selections["Closest"] = PAWM_AST_CLOSEST;
     m_pMainMenu->AddMenuItem(new CNexusMenuAddSeqType       ("addSeq"        , "Selects the manner in which branches are added during the generation of starting trees", selections));
 }
@@ -216,7 +217,7 @@ void CNexusUserInterface::ConfigMenuGap()
     map<const char*, int, ltstr> selections;
     selections["Inapplicable"] = GAP_INAPPLIC;
     selections["Missing"] = GAP_MISSING;
-    selections["New state"] = GAP_NEWSTATE;
+    selections["State"] = GAP_NEWSTATE;
     m_pMainMenu->AddMenuItem(new CNexusMenuGap              ("gap"           , "Set whether gap symbol ('-') will be treated as inapplicability or as missing data", selections));
 }
 
@@ -802,7 +803,6 @@ bool CNexusUserInterface::fCNexusMenuTreeLimit        (string *value, unsigned l
 {
     if (m_mflHandle)
     {
-//        m_mflHandle->maxTrees(nMappedVal);
         mpl_set_maxtrees(nMappedVal, m_mflHandle);
     }
     else
