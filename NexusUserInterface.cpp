@@ -168,7 +168,9 @@ void CNexusUserInterface::ConfigMenuBranchSwapType()
 {
     map<const char*, int, ltstr> selections;
     selections["TreeBisection"] = MPL_TBR_T;
+    selections["TBR"] = MPL_TBR_T;
     selections["SubtreePruning"] = MPL_SPR_T;
+    selections["SPR"] = MPL_SPR_T;
     m_pMainMenu->AddMenuItem(new CNexusMenuBranchSwapType   ("branchSwap"    , "Set branch swap type for heuristic searches", selections));
 }
 
