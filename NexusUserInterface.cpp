@@ -270,7 +270,7 @@ void CNexusUserInterface::DoMenu()
         try
         {
             strInput.clear();
-            m_ioCommands->GetUserInput(m_pMenu->GetPrompt(), &strInput, false);
+            m_ioCommands->GetUserInput(m_pMenu->GetPrompt(), &strInput);
             ret = m_pMenu->RunSelections(strInput, this);
         }
         catch (const char *e)
