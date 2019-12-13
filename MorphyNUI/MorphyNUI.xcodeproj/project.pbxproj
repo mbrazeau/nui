@@ -1,0 +1,447 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		511C68E32295711F007D6615 /* NexusParse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C68DA2295711F007D6615 /* NexusParse.cpp */; };
+		511C68E42295711F007D6615 /* NexusMenuBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C68DB2295711F007D6615 /* NexusMenuBase.cpp */; };
+		511C68E52295711F007D6615 /* NexusUserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C68DC2295711F007D6615 /* NexusUserInterface.cpp */; };
+		511C68E62295711F007D6615 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C68DF2295711F007D6615 /* main.cpp */; };
+		511C68E72295711F007D6615 /* NexusMenuData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C68E02295711F007D6615 /* NexusMenuData.cpp */; };
+		511C68E82295711F007D6615 /* NexusReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511C68E12295711F007D6615 /* NexusReader.cpp */; };
+		51FF823F2298353A002E1623 /* libncl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 511C691322958ECA007D6615 /* libncl.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		51FF82402298355D002E1623 /* libmpl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 511C691022958A20007D6615 /* libmpl.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		514B70022296805400340187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 518C8F7921D777BA00005610;
+			remoteInfo = Morphy;
+		};
+		514B70042296805400340187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 51A6B80B21D90BDD0086CE68;
+			remoteInfo = "Morphy GUI";
+		};
+		514B70062296805400340187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 51A6B81C21D90BDF0086CE68;
+			remoteInfo = "Morphy GUITests";
+		};
+		514B70082296805400340187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 51A6B82721D90BDF0086CE68;
+			remoteInfo = "Morphy GUIUITests";
+		};
+		514B700A2296805400340187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 513C3359228093DA0038DF0D;
+			remoteInfo = mpl;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		511C68CA229570FD007D6615 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		511C68CC229570FD007D6615 /* MorphyNUI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MorphyNUI; sourceTree = BUILT_PRODUCTS_DIR; };
+		511C68D62295711F007D6615 /* NexusParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexusParse.h; path = ../../NexusParse.h; sourceTree = "<group>"; };
+		511C68D72295711F007D6615 /* NexusReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexusReader.h; path = ../../NexusReader.h; sourceTree = "<group>"; };
+		511C68D82295711F007D6615 /* myostream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myostream.h; path = ../../myostream.h; sourceTree = "<group>"; };
+		511C68D92295711F007D6615 /* NexusMenuBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexusMenuBase.h; path = ../../NexusMenuBase.h; sourceTree = "<group>"; };
+		511C68DA2295711F007D6615 /* NexusParse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NexusParse.cpp; path = ../../NexusParse.cpp; sourceTree = "<group>"; };
+		511C68DB2295711F007D6615 /* NexusMenuBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NexusMenuBase.cpp; path = ../../NexusMenuBase.cpp; sourceTree = "<group>"; };
+		511C68DC2295711F007D6615 /* NexusUserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NexusUserInterface.cpp; path = ../../NexusUserInterface.cpp; sourceTree = "<group>"; };
+		511C68DD2295711F007D6615 /* EditLineHist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditLineHist.h; path = ../../EditLineHist.h; sourceTree = "<group>"; };
+		511C68DE2295711F007D6615 /* NexusUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexusUserInterface.h; path = ../../NexusUserInterface.h; sourceTree = "<group>"; };
+		511C68DF2295711F007D6615 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../main.cpp; sourceTree = "<group>"; };
+		511C68E02295711F007D6615 /* NexusMenuData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NexusMenuData.cpp; path = ../../NexusMenuData.cpp; sourceTree = "<group>"; };
+		511C68E12295711F007D6615 /* NexusReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NexusReader.cpp; path = ../../NexusReader.cpp; sourceTree = "<group>"; };
+		511C68E22295711F007D6615 /* NexusMenuData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexusMenuData.h; path = ../../NexusMenuData.h; sourceTree = "<group>"; };
+		511C691022958A20007D6615 /* libmpl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmpl.a; path = "../../../../Library/Developer/Xcode/DerivedData/MorphyNUI-ahdcrluifxqmssbvhkypgrrpvhqo/Build/Products/Release/libmpl.a"; sourceTree = "<group>"; };
+		511C691322958ECA007D6615 /* libncl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libncl.a; path = ../../install/lib/ncl/libncl.a; sourceTree = "<group>"; };
+		514B6FFA2296805400340187 /* Morphy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Morphy.xcodeproj; path = ../../../Morphy/Morphy.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		511C68C9229570FD007D6615 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51FF823F2298353A002E1623 /* libncl.a in Frameworks */,
+				51FF82402298355D002E1623 /* libmpl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		511C68C3229570FD007D6615 = {
+			isa = PBXGroup;
+			children = (
+				511C68CE229570FD007D6615 /* MorphyNUI */,
+				511C68CD229570FD007D6615 /* Products */,
+				511C690D22958923007D6615 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		511C68CD229570FD007D6615 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				511C68CC229570FD007D6615 /* MorphyNUI */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		511C68CE229570FD007D6615 /* MorphyNUI */ = {
+			isa = PBXGroup;
+			children = (
+				511C68DD2295711F007D6615 /* EditLineHist.h */,
+				511C68DF2295711F007D6615 /* main.cpp */,
+				511C68D82295711F007D6615 /* myostream.h */,
+				511C68DB2295711F007D6615 /* NexusMenuBase.cpp */,
+				511C68D92295711F007D6615 /* NexusMenuBase.h */,
+				511C68E02295711F007D6615 /* NexusMenuData.cpp */,
+				511C68E22295711F007D6615 /* NexusMenuData.h */,
+				511C68DA2295711F007D6615 /* NexusParse.cpp */,
+				511C68D62295711F007D6615 /* NexusParse.h */,
+				511C68E12295711F007D6615 /* NexusReader.cpp */,
+				511C68D72295711F007D6615 /* NexusReader.h */,
+				511C68DC2295711F007D6615 /* NexusUserInterface.cpp */,
+				511C68DE2295711F007D6615 /* NexusUserInterface.h */,
+			);
+			path = MorphyNUI;
+			sourceTree = "<group>";
+		};
+		511C690D22958923007D6615 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				514B6FFA2296805400340187 /* Morphy.xcodeproj */,
+				511C691322958ECA007D6615 /* libncl.a */,
+				511C691022958A20007D6615 /* libmpl.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		514B6FFB2296805400340187 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				514B70032296805400340187 /* Morphy */,
+				514B70052296805400340187 /* Morphy GUI.app */,
+				514B70072296805400340187 /* Morphy GUITests.xctest */,
+				514B70092296805400340187 /* Morphy GUIUITests.xctest */,
+				514B700B2296805400340187 /* libmpl.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		511C68CB229570FD007D6615 /* MorphyNUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 511C68D3229570FD007D6615 /* Build configuration list for PBXNativeTarget "MorphyNUI" */;
+			buildPhases = (
+				511C68C8229570FD007D6615 /* Sources */,
+				511C68C9229570FD007D6615 /* Frameworks */,
+				511C68CA229570FD007D6615 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MorphyNUI;
+			productName = MorphyNUI;
+			productReference = 511C68CC229570FD007D6615 /* MorphyNUI */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		511C68C4229570FD007D6615 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Martin Brazeau";
+				TargetAttributes = {
+					511C68CB229570FD007D6615 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 511C68C7229570FD007D6615 /* Build configuration list for PBXProject "MorphyNUI" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 511C68C3229570FD007D6615;
+			productRefGroup = 511C68CD229570FD007D6615 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 514B6FFB2296805400340187 /* Products */;
+					ProjectRef = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				511C68CB229570FD007D6615 /* MorphyNUI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		514B70032296805400340187 /* Morphy */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Morphy;
+			remoteRef = 514B70022296805400340187 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		514B70052296805400340187 /* Morphy GUI.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Morphy GUI.app";
+			remoteRef = 514B70042296805400340187 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		514B70072296805400340187 /* Morphy GUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Morphy GUITests.xctest";
+			remoteRef = 514B70062296805400340187 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		514B70092296805400340187 /* Morphy GUIUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Morphy GUIUITests.xctest";
+			remoteRef = 514B70082296805400340187 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		514B700B2296805400340187 /* libmpl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libmpl.a;
+			remoteRef = 514B700A2296805400340187 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		511C68C8229570FD007D6615 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				511C68E52295711F007D6615 /* NexusUserInterface.cpp in Sources */,
+				511C68E72295711F007D6615 /* NexusMenuData.cpp in Sources */,
+				511C68E82295711F007D6615 /* NexusReader.cpp in Sources */,
+				511C68E32295711F007D6615 /* NexusParse.cpp in Sources */,
+				511C68E62295711F007D6615 /* main.cpp in Sources */,
+				511C68E42295711F007D6615 /* NexusMenuBase.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		511C68D1229570FD007D6615 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		511C68D2229570FD007D6615 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		511C68D4229570FD007D6615 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/ncl/,
+					/Users/mbrazeau/Code/Morphy/Morphy/include/,
+					/usr/local/include/,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/Users/mbrazeau/Code/morphyproject/install/lib/ncl/,
+					"/Users/mbrazeau/Library/Developer/Xcode/DerivedData/MorphyNUI-ahdcrluifxqmssbvhkypgrrpvhqo/Build/Products/Release",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ledit";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		511C68D5229570FD007D6615 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/ncl/,
+					/Users/mbrazeau/Code/Morphy/Morphy/include/,
+					/usr/local/include/,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/Users/mbrazeau/Code/morphyproject/install/lib/ncl/,
+					"/Users/mbrazeau/Library/Developer/Xcode/DerivedData/MorphyNUI-ahdcrluifxqmssbvhkypgrrpvhqo/Build/Products/Release",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ledit";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		511C68C7229570FD007D6615 /* Build configuration list for PBXProject "MorphyNUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				511C68D1229570FD007D6615 /* Debug */,
+				511C68D2229570FD007D6615 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		511C68D3229570FD007D6615 /* Build configuration list for PBXNativeTarget "MorphyNUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				511C68D4229570FD007D6615 /* Debug */,
+				511C68D5229570FD007D6615 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 511C68C4229570FD007D6615 /* Project object */;
+}
