@@ -758,6 +758,14 @@ bool CNexusUserInterface::fCNexusMenuReport(string *value, int nMappedVal)
 bool CNexusUserInterface::fCNexusMenuBranchSwapType (string *value, mpl_bbreak_t nMappedVal)
 {
     // CJD FIXME: mfl_set_parameter(m_mflHandle, MFL_PT_BRANCH_SWAP_TYPE, (void*)nMappedVal);
+    if (m_mflHandle)
+        {
+            mpl_set_brswap(nMappedVal, m_mflHandle);
+        }
+        else
+        {
+            cout<<"No file open"<<endl;
+        }
     return true;
 }
 
