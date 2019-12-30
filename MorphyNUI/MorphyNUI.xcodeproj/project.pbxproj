@@ -25,27 +25,6 @@
 			remoteGlobalIDString = 518C8F7921D777BA00005610;
 			remoteInfo = Morphy;
 		};
-		514B70042296805400340187 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 51A6B80B21D90BDD0086CE68;
-			remoteInfo = "Morphy GUI";
-		};
-		514B70062296805400340187 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 51A6B81C21D90BDF0086CE68;
-			remoteInfo = "Morphy GUITests";
-		};
-		514B70082296805400340187 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 51A6B82721D90BDF0086CE68;
-			remoteInfo = "Morphy GUIUITests";
-		};
 		514B700A2296805400340187 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 514B6FFA2296805400340187 /* Morphy.xcodeproj */;
@@ -151,9 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				514B70032296805400340187 /* Morphy */,
-				514B70052296805400340187 /* Morphy GUI.app */,
-				514B70072296805400340187 /* Morphy GUITests.xctest */,
-				514B70092296805400340187 /* Morphy GUIUITests.xctest */,
 				514B700B2296805400340187 /* libmpl.a */,
 			);
 			name = Products;
@@ -222,27 +198,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = Morphy;
 			remoteRef = 514B70022296805400340187 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		514B70052296805400340187 /* Morphy GUI.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Morphy GUI.app";
-			remoteRef = 514B70042296805400340187 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		514B70072296805400340187 /* Morphy GUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Morphy GUITests.xctest";
-			remoteRef = 514B70062296805400340187 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		514B70092296805400340187 /* Morphy GUIUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Morphy GUIUITests.xctest";
-			remoteRef = 514B70082296805400340187 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		514B700B2296805400340187 /* libmpl.a */ = {
@@ -316,6 +271,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_VERSION = com.intel.compilers.icc.latest;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -369,6 +325,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_VERSION = com.intel.compilers.icc.latest;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -386,11 +344,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_VERSION = com.intel.compilers.icc.latest;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/ncl/,
 					/Users/mbrazeau/Code/Morphy/Morphy/include/,
 					/usr/local/include/,
 				);
+				ICC_OPTLEVEL = speedHLO;
+				ICC_OPT_REQUIRE_INTEL_ARCH = HOST;
 				LIBRARY_SEARCH_PATHS = (
 					/Users/mbrazeau/Code/morphyproject/install/lib/ncl/,
 					"/Users/mbrazeau/Library/Developer/Xcode/DerivedData/MorphyNUI-ahdcrluifxqmssbvhkypgrrpvhqo/Build/Products/Release",
@@ -405,11 +366,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_VERSION = com.intel.compilers.icc.latest;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/ncl/,
 					/Users/mbrazeau/Code/Morphy/Morphy/include/,
 					/usr/local/include/,
 				);
+				ICC_OPTLEVEL = speedHLO;
+				ICC_OPT_REQUIRE_INTEL_ARCH = HOST;
 				LIBRARY_SEARCH_PATHS = (
 					/Users/mbrazeau/Code/morphyproject/install/lib/ncl/,
 					"/Users/mbrazeau/Library/Developer/Xcode/DerivedData/MorphyNUI-ahdcrluifxqmssbvhkypgrrpvhqo/Build/Products/Release",

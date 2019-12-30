@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../../../Morphy/Morphy.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "self:MorphyNUI.xcodeproj">
    </FileRef>
 </Workspace>
