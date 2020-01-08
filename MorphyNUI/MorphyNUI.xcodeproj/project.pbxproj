@@ -161,7 +161,7 @@
 		511C68C4229570FD007D6615 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Martin Brazeau";
 				TargetAttributes = {
 					511C68CB229570FD007D6615 = {
@@ -333,6 +333,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ICC_OPTLEVEL = speedHLO;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -343,6 +344,7 @@
 		511C68D4229570FD007D6615 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_VERSION = com.intel.compilers.icc.latest;
 				HEADER_SEARCH_PATHS = (
@@ -350,7 +352,7 @@
 					/Users/mbrazeau/Code/Morphy/Morphy/include/,
 					/usr/local/include/,
 				);
-				ICC_OPTLEVEL = speedHLO;
+				ICC_OPTLEVEL = none;
 				ICC_OPT_REQUIRE_INTEL_ARCH = HOST;
 				LIBRARY_SEARCH_PATHS = (
 					/Users/mbrazeau/Code/morphyproject/install/lib/ncl/,
@@ -365,6 +367,7 @@
 		511C68D5229570FD007D6615 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_VERSION = com.intel.compilers.icc.latest;
 				HEADER_SEARCH_PATHS = (
