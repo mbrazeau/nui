@@ -6,8 +6,10 @@
 #include "EditLineHist.h"
 #include "NexusMenuData.h"
 
-#define NUI_MAJOR_VERSION   0
-#define NUI_MINOR_VERSION   1
+#include "morphyNUIConfig.h"
+
+//#define NUI_MAJOR_VERSION   0
+//#define NUI_MINOR_VERSION   1
 
     
 class CNexusUserInterface

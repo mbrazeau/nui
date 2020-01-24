@@ -499,7 +499,7 @@ bool CNexusUserInterface::fCNexusMenuQuit           (string *value, int nMappedV
 bool CNexusUserInterface::fCNexusMenuAbout          (string *value, int nMappedVal, bool bShowBuildTime)
 {
     cout<<endl;
-    cout<<"Morphy NUI Version: "<<NUI_MAJOR_VERSION<<"."<<NUI_MINOR_VERSION<<endl;
+    cout<<"Morphy NUI Version: "<<morphy_nui_v_MAJOR_VERSION <<"."<<morphy_nui_v_MINOR_VERSION <<endl;
     cout<<"Copyright 2019 (C) Martin Brazeau and Chris Desjardins. All rights reserved."<<endl;
     cout<<"This program uses the NCL by Paul O. Lewis."<<endl<<endl;
     cout<<"For a list of commands enter the command \"help\""<<endl<<endl;
