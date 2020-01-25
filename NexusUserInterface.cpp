@@ -351,6 +351,8 @@ void CNexusUserInterface::CreateHandle()
 {
     DestroyHandle();
 
+    int err = 0;
+    
     stringstream ss;
     int nTax = m_pNexusParse->m_cTaxa->GetNTax();
     int nChar = m_pNexusParse->m_cChars->GetNCharTotal();
@@ -359,7 +361,36 @@ void CNexusUserInterface::CreateHandle()
     const char* cstr;
 
     m_mflHandle = mpl_handle_new();//new PAWM(nTax, nChar);
-    mpl_set_dimensions(nTax, nChar, m_mflHandle);
+    
+    if (m_mflHandle != NULL)
+    {
+        err = 0;
+        err = mpl_set_dimensions(nTax, nChar, m_mflHandle);
+        if (err < 0)
+        {
+            cout << "Unable to set dimensions. Likely causes: " << endl;
+            if (nTax < 3 && nTax > 0)
+            {
+                cout << "- Input specifies fewer than 3 taxa." << endl;
+            }
+            else if (nChar < 1 || nTax < 0)
+            {
+                cout << "- Number of characters less than 1" << endl;
+                cout << "- Illogical (i.e. negative) matrix dimensions." << endl;
+            }
+            else
+            {
+                cout << "- Insufficient memory." << endl;
+            }
+        }
+    }
+    else
+    {
+        cout << "Error: unable to initialise Morphy. " << endl <<
+        "Likely insufficient memory for operation." << endl;
+        return;
+    }
+    
     for (i = 0; i < nTax; i++)
     {
         m_pNexusParse->m_cChars->WriteStatesForTaxonAsNexus(ss, i, 0, nChar);
@@ -369,7 +400,13 @@ void CNexusUserInterface::CreateHandle()
     tmp = ss.str();
     cstr = tmp.c_str();
     
-    mpl_attach_rawdata(MPL_DISCR_T, cstr, m_mflHandle);
+    err = 0;
+    err = mpl_attach_rawdata(MPL_DISCR_T, cstr, m_mflHandle);
+    if (err < 0)
+    {
+        cout << "Unable to read data. Check your file for errors." << endl;
+    }
+        
 }
 
 bool CNexusUserInterface::SaveTranslateTable(myofstream &fSave)
@@ -414,12 +451,12 @@ bool CNexusUserInterface::SaveNewickStrings(myofstream &fSave)
         }
         else
         {
-            cout<<"Unable to get newick trees"<<endl;
+            cout<<"Unable to get newick trees."<<endl;
         }
     }
     else
     {
-        cout<<"No file open"<<endl;
+        cout<<"No file open."<<endl;
     }
     return true;
 }
@@ -652,12 +689,21 @@ void CNexusUserInterface::PrintHsearchData()
 
 bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedVal)
 {
+    int err = 0;
+    
     if (m_mflHandle)
     {
         // TODO: Make sure this is straightened out
-        mpl_do_search(m_mflHandle);
-        PrintHsearchData();
-        PrintIslandData();
+        err = mpl_do_search(m_mflHandle);
+        if (err == 0)
+        {
+            PrintHsearchData();
+            PrintIslandData();
+        }
+        else
+        {
+            cout << "Unable to initiate search." << endl;
+        }
     }
     else
     {
