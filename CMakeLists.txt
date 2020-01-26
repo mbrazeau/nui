@@ -2,10 +2,13 @@ file(GLOB nui_SRC
     "*.h"
     "*.cpp"
 )
-set(EXENAME "morphy_nui_v${CMAKE_PROJECT_VERSION}")
+set(EXENAME "morphy_nui_v${CMAKE_PROJECT_VERSION_MAJOR}")
 if (BETA)
 set(EXENAME "${EXENAME}b")
+else()
+set(EXENAME "${EXENAME}_")
 endif()
+set(EXENAME "${EXENAME}${CMAKE_PROJECT_VERSION_MINOR}")
 include_directories(${CMAKE_SOURCE_DIR}/../mpl/include ${CMAKE_SOURCE_DIR}/../install/include)
 add_executable(${EXENAME} ${nui_SRC})
 target_link_libraries(${EXENAME} ${PATH_LIB_NCL} mpl)
