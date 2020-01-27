@@ -66,14 +66,22 @@ bool CNexusParse::ReadNexusFile(string *infname, string *outfname)
             {
                 CNexusToken token(iStream, m_cNexusReader->GetOutStream());
                 m_cNexusReader->Execute(token);
-                bRet = true;
+                // TODO: This is a bug. Should probably use exceptions here.
+                if (m_cTaxa->GetNTax() && m_cChars->GetNChar()) {
+                    bRet = true;
+                }
             }
         }
     }
     if (HasDataBlock())
     {
         m_cData->TransferTo(*m_cChars);
+        if (m_cChars->GetNChar()) {
+            bRet = true;
+        }
     }
+
+
     return bRet;
 }
 

@@ -310,7 +310,13 @@ bool CNexusUserInterface::fCNexusMenuOpenNexusFile(string *value, int nMappedVal
         {
             m_ioInputFiles->GetUserInput(" Enter filename: " + m_strCwd, &strFilename, true);
         }
-        strFilename = m_strCwd + strFilename;
+        
+        // Check if the input isn't a path by checking for slashes
+        if (strFilename.find_first_of("\\/") == string::npos)
+        {
+            strFilename = m_strCwd + strFilename;
+        }
+        
         m_pNexusParse = new CNexusParse();
         if (m_pNexusParse)
         {
