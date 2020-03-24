@@ -547,7 +547,7 @@ bool CNexusUserInterface::fCNexusMenuAbout          (string *value, int nMappedV
     cout << " beta";
 #endif
     cout<<endl;
-    cout<<"Copyright 2019 (C) Martin Brazeau and Chris Desjardins. All rights reserved."<<endl;
+    cout<<"Copyright 2020 (C) Martin Brazeau and Chris Desjardins. All rights reserved."<<endl;
     cout<<"This program uses the NCL by Paul O. Lewis."<<endl<<endl;
     cout<<"For a list of commands enter the command \"help\""<<endl<<endl;
     if (bShowBuildTime)
