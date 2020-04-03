@@ -471,7 +471,7 @@ bool CNexusUserInterface::SaveNewickStrings(myofstream &fSave)
 bool CNexusUserInterface::fCNexusMenuSaveFile(string *value, int nMappedVal)
 {
     string strFilename = *value;
-    string inFilename = strFilename;
+    string inFilename;
     string usrResponse;
     bool response = false;
     myofstream fSave;
@@ -481,9 +481,10 @@ bool CNexusUserInterface::fCNexusMenuSaveFile(string *value, int nMappedVal)
     {
         m_ioLogFiles->GetUserInput(" Enter save filename: " + m_strCwd, &strFilename, true);
     }
+    inFilename = strFilename; // Store a copy of the input file name w/o path for reporting back to user
     strFilename = m_strCwd + strFilename;
     
-    // Check if the file does not already exist.
+    // Check if the file does not already exist & warn the user if it does.
     if ((stat(strFilename.c_str(), &st) == 0) && (S_ISREG(st.st_mode)))
     {
         cout <<"'"<< inFilename <<"'"<< " is already a file, would you like to overwrite?" << endl;
@@ -491,7 +492,6 @@ bool CNexusUserInterface::fCNexusMenuSaveFile(string *value, int nMappedVal)
         do {
             m_ioLogFiles->GetUserInput(" (y,n): ", &usrResponse, false);
             if (usrResponse.compare("y") == 0 || usrResponse.compare("Y") == 0) {
-                cout << "OK. Fine!" << endl;
                 break;
             } else if (usrResponse.compare("n") == 0 || usrResponse.compare("N") == 0) {
                 cout << "Save aborting." << endl;
