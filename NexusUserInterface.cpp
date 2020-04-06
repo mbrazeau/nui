@@ -64,6 +64,7 @@ NEW_COMMAND_DEFINE(CNexusMenuOutgroup       )
 NEW_COMMAND_DEFINE(CNexusMenuIngroup        )
 //NEW_COMMAND_DEFINE(CNexusMenuChar           )
 NEW_COMMAND_DEFINE(CNexusMenuOrdered        )
+NEW_COMMAND_DEFINE(CNexusMenuUnordered      )
 
 NEW_COMMAND_DEFINE(CNexusMenuHeuristicSearch)
 NEW_COMMAND_DEFINE(CNexusMenuExhaust        )
@@ -126,6 +127,7 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuOutgroup        ("outGroup"      , "Assign taxa to outgroup"));
     m_pMainMenu->AddMenuItem(new CNexusMenuIngroup         ("inGroup"       , "Return taxa from outgroup to ingroup"));
     m_pMainMenu->AddMenuItem(new CNexusMenuOrdered         ("ordered"       , "Define characters as ordered type"));
+    m_pMainMenu->AddMenuItem(new CNexusMenuUnordered       ("Unordered"     , "Define characters as unordered type"));
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Analysis"));
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));

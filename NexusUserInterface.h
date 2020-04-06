@@ -44,6 +44,7 @@ public:
     bool fCNexusMenuOutgroup       (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuIngroup        (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuOrdered        (string *value = NULL, int nMappedVal = -1);
+    bool fCNexusMenuUnordered      (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuSet            (string *value = NULL, int nMappedVal = -1);
                
     bool fCNexusMenuHeuristicSearch(string *value = NULL, int nMappedVal = -1);
