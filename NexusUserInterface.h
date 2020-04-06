@@ -81,6 +81,7 @@ protected:
     void PrintIslandData();
     void PrintHsearchData();
     void UserVerify();
+    void SetCharType(const mpl_parsim_t ptype, string *value, int nMappedVal);
     void ParseUserList(vector<string> &tokens, string *value);
 
     void ConfigMenuBranchSwapType();

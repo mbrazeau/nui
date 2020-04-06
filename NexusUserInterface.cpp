@@ -690,7 +690,7 @@ void CNexusUserInterface::ParseUserList             (vector<string> &tokens, str
     }
 }
 
-bool CNexusUserInterface::fCNexusMenuOrdered        (string *value, int nMappedVal)
+void CNexusUserInterface::SetCharType               (const mpl_parsim_t ptype, string *value, int nMappedVal)
 {
     int i = 0;
     vector<string> tokens;
@@ -709,11 +709,24 @@ bool CNexusUserInterface::fCNexusMenuOrdered        (string *value, int nMappedV
         
         index = strtol(tokens[i].c_str(), &p, 10);
         
-        if (mpl_set_parsim_t(index-1, MPL_WAGNER_T, m_mflHandle) < 0)
+        if (mpl_set_parsim_t(index-1, ptype, m_mflHandle) < 0)
         {
             cout << "Index out of bounds: " << index << endl;
         }
     }
+}
+
+bool CNexusUserInterface::fCNexusMenuOrdered        (string *value, int nMappedVal)
+{
+    SetCharType(MPL_WAGNER_T, value, nMappedVal);
+    
+    return true;
+}
+
+
+bool CNexusUserInterface::fCNexusMenuUnordered        (string *value, int nMappedVal)
+{
+    SetCharType(MPL_FITCH_T, value, nMappedVal);
     
     return true;
 }
