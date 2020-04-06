@@ -62,7 +62,8 @@ NEW_COMMAND_DEFINE(CNexusMenuExclude        )
 NEW_COMMAND_DEFINE(CNexusMenuInclude        )
 NEW_COMMAND_DEFINE(CNexusMenuOutgroup       )
 NEW_COMMAND_DEFINE(CNexusMenuIngroup        )
-NEW_COMMAND_DEFINE(CNexusMenuChar           )
+//NEW_COMMAND_DEFINE(CNexusMenuChar           )
+NEW_COMMAND_DEFINE(CNexusMenuOrdered        )
 
 NEW_COMMAND_DEFINE(CNexusMenuHeuristicSearch)
 NEW_COMMAND_DEFINE(CNexusMenuExhaust        )
@@ -124,17 +125,17 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuInclude         ("include"       , "Include excluded taxa or characters"));
     m_pMainMenu->AddMenuItem(new CNexusMenuOutgroup        ("outGroup"      , "Assign taxa to outgroup"));
     m_pMainMenu->AddMenuItem(new CNexusMenuIngroup         ("inGroup"       , "Return taxa from outgroup to ingroup"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuChar            ("char"          , "Modify a character's type"));
+    m_pMainMenu->AddMenuItem(new CNexusMenuOrdered         ("ordered"       , "Define characters as ordered type"));
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Analysis"));
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));
-//    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Begin a ratchet search"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuBNB             ("branchbound"   , "Begin a branch-and-bound search"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuStepwise        ("stepwise"      , "Begin a stepwise search"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuBootstrap       ("bootStrap"     , "Begin a bootstrap analysis"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuJackknife       ("jackKnife"     , "Begin a jackknife analysis"));
-    m_pMainMenu->AddMenuItem(new CNexusMenuSTR             ("reduction"     , "Perform a safe taxonomic reduction"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Toggle ratchet searching"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuBNB             ("branchbound"   , "Begin a branch-and-bound search"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuStepwise        ("stepwise"      , "Begin a stepwise search"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuBootstrap       ("bootStrap"     , "Begin a bootstrap analysis"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuJackknife       ("jackKnife"     , "Begin a jackknife analysis"));
+//    m_pMainMenu->AddMenuItem(new CNexusMenuSTR             ("reduction"     , "Perform a safe taxonomic reduction"));
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Results"));
     m_pMainMenu->AddMenuItem(new CNexusMenuConsens         ("consensus"     , "Compute consensus tree for trees in memory"));
@@ -303,7 +304,7 @@ void CNexusUserInterface::DoMenu()
 bool CNexusUserInterface::fCNexusMenuOpenNexusFile(string *value, int nMappedVal)
 {
     string strFilename = *value;
-    struct stat st;
+    // struct stat st;
 
     if (!m_pNexusParse)
     {
@@ -674,9 +675,46 @@ bool CNexusUserInterface::fCNexusMenuIngroup        (string *value, int nMappedV
     return true;
 }
 
-bool CNexusUserInterface::fCNexusMenuChar           (string *value, int nMappedVal)
+/*
+ This is for when a user supplies a list, such as a list of taxa or indices
+ of characters or taxa.
+ */
+void CNexusUserInterface::ParseUserList             (vector<string> &tokens, string *value)
 {
-    cout<<"Not implemented"<<endl;
+    stringstream input(*value);
+    string s;
+    
+    while(getline(input, s, ' '))
+    {
+        tokens.push_back(s);
+    }
+}
+
+bool CNexusUserInterface::fCNexusMenuOrdered        (string *value, int nMappedVal)
+{
+    int i = 0;
+    vector<string> tokens;
+    char *p;
+    long index = 0;
+    
+    ParseUserList(tokens, value);
+    
+    for (i = 0; i < tokens.size(); ++i)
+    {
+        if (!all_of(tokens[i].begin(), tokens[i].end(), ::isdigit))
+        {
+            cout << "Unrecognised index: " << tokens[i] << endl;
+            continue;
+        }
+        
+        index = strtol(tokens[i].c_str(), &p, 10);
+        
+        if (mpl_set_parsim_t(index-1, MPL_WAGNER_T, m_mflHandle) < 0)
+        {
+            cout << "Index out of bounds: " << index << endl;
+        }
+    }
+    
     return true;
 }
 

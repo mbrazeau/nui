@@ -43,7 +43,7 @@ public:
     bool fCNexusMenuInclude        (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuOutgroup       (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuIngroup        (string *value = NULL, int nMappedVal = -1);
-    bool fCNexusMenuChar           (string *value = NULL, int nMappedVal = -1);
+    bool fCNexusMenuOrdered        (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuSet            (string *value = NULL, int nMappedVal = -1);
                
     bool fCNexusMenuHeuristicSearch(string *value = NULL, int nMappedVal = -1);
@@ -80,6 +80,8 @@ protected:
     bool SaveNewickStrings(myofstream &fSave);
     void PrintIslandData();
     void PrintHsearchData();
+    void UserVerify();
+    void ParseUserList(vector<string> &tokens, string *value);
 
     void ConfigMenuBranchSwapType();
     void ConfigMenuAddSeqType();
