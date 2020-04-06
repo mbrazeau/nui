@@ -720,6 +720,9 @@ void CNexusUserInterface::SetCharType               (const mpl_parsim_t ptype, s
 
 bool CNexusUserInterface::fCNexusMenuOrdered        (string *value, int nMappedVal)
 {
+    cout << "Not implemented" << endl;
+    return true;
+    
     SetCharType(MPL_WAGNER_T, value, nMappedVal);
     
     return true;
