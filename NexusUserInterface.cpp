@@ -130,6 +130,7 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuUnordered       ("Unordered"     , "Define characters as unordered type"));
 
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Analysis"));
+    ConfigMenuRatchetSearch();
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));
 //    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Toggle ratchet searching"));
 //    m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
@@ -151,13 +152,11 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Parameters"));
     ConfigMenuBranchSwapType();
     ConfigMenuAddSeqType();
-    ConfigMenuRatchetSearch();
     //CJD FIXME: ConfigMenuCollapseAt();
     //CJD FIXME: ConfigMenuCollapseZero();
     m_pMainMenu->AddMenuItem(new CNexusMenuNumReplicates    ("nreps"         , "Set the number of replications for a heuristic search", MAKE_INT_VECTOR(NumReps)));
     m_pMainMenu->AddMenuItem(new CNexusMenuTreeLimit        ("treeLimit"     , "Set the maximum number of trees allowed to be stored in memory", MAKE_INT_VECTOR(TreeLimit)));
 	m_pMainMenu->AddMenuItem(new CNexusMenuHold				("hold"	         , "Set the number of trees to hold during stepwise addition", MAKE_INT_VECTOR(holdLimit)));
-    //CJD FIXME: ConfigMenuRatchetSearch();
     ConfigMenuGap();
 
     m_ioCommands = new CEditLineHist("nui1234567890", &m_fCommandLog);
@@ -198,23 +197,27 @@ void CNexusUserInterface::ConfigMenuCollapseAt()
     m_pMainMenu->AddMenuItem(new CNexusMenuCollapseAt       ("collapseAt"    , "Configure when to collapse nodes", selections));
 }
 */
-/* CJD FIXME:
+
 void CNexusUserInterface::ConfigMenuCollapseZero()
 {
+    // TODO: Remove this when implemented
+    cout << "Not implemented." << endl;
+    return;
+    
     map<const char*, int, ltstr> selections;
-    selections["Collapse"] = true;
-    selections["NoCollapse"] = false;
+    // TODO: COnfigure these settings
+    selections["no"] = false;
+    selections["min"] = true;
+    selections["max"] = true; // TODO: These need MPL codes
     m_pMainMenu->AddMenuItem(new CNexusMenuCollapseZero     ("collapseZero"  , "Enable collapsing of zero length branches during search", selections));
 }
-*/
-/* CJD FIXME:*/
-// MDB: Fixed?
+
 void CNexusUserInterface::ConfigMenuRatchetSearch()
 {
     map<const char*, int, ltstr> selections;
     selections["Yes"] = true;
     selections["No"] = false;
-    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch    ("ratchet"       , "Set the ratchet search parameter", selections));
+    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch    ("ratchet"       , "Toggle the ratchet", selections));
 }
 
 void CNexusUserInterface::ConfigMenuGap()
