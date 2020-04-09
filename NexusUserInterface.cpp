@@ -382,6 +382,18 @@ bool CNexusUserInterface::fCNexusMenuOpenTreeFile(string *value, int nMappedVal)
             {
                 cout<<" "<<strFilename<<" opened successfully"<<endl<<endl;
                 m_pNexusInputTrees->m_cTaxa = NULL;
+                
+                long ntrees = mpl_get_num_trees(m_mflHandle);
+                if (ntrees) {
+                    cout << "There are " << ntrees << " currently in memory." << endl;
+                    cout << "Would you like to append? ";
+                    if (!UserConfirmation()) {
+                        cout << endl;
+                        cout << "To overwrite trees clear the buffer (cleartrees) and retry import" << endl;
+                        return true;
+                    }
+                }
+                
                 for (i = 0; i < m_pNexusInputTrees->m_cTrees->GetNumTrees(); ++i)
                 {
                     const NxsFullTreeDescription &t = m_pNexusInputTrees->m_cTrees->GetFullTreeDescription(i);
