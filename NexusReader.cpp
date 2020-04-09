@@ -1,6 +1,6 @@
 #include "NexusReader.h"
 
-CNexusReader::CNexusReader(string *infname, string *outfname) : NxsReader()
+CNexusReader::CNexusReader(string *infname, string *outfname) : MultiFormatReader()
 {
     if (infname)
     {

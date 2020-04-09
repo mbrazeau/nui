@@ -3,7 +3,7 @@
 #include "ncl/ncl.h"
 #include "myostream.h"
 
-class CNexusReader : public NxsReader
+class CNexusReader : public MultiFormatReader
 {
 public:
     CNexusReader(string *infname, string *outfname);
