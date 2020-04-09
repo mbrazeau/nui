@@ -67,6 +67,7 @@ NEW_COMMAND_DEFINE(CNexusMenuOrdered        )
 NEW_COMMAND_DEFINE(CNexusMenuUnordered      )
 
 NEW_COMMAND_DEFINE(CNexusMenuHeuristicSearch)
+NEW_COMMAND_DEFINE(CNexusMenuScoreTree      )
 NEW_COMMAND_DEFINE(CNexusMenuExhaust        )
 NEW_COMMAND_DEFINE(CNexusMenuBNB            )
 NEW_COMMAND_DEFINE(CNexusMenuStepwise       )
@@ -75,7 +76,7 @@ NEW_COMMAND_DEFINE(CNexusMenuJackknife      )
 NEW_COMMAND_DEFINE(CNexusMenuSTR            )
 
 NEW_COMMAND_DEFINE(CNexusMenuConsens        )
-//NEW_COMMAND_DEFINE(CNexusMenuCollapse       )
+NEW_COMMAND_DEFINE(CNexusMenuCollapse       )
 NEW_COMMAND_DEFINE(CNexusMenuReport         )
 
 /*
@@ -85,7 +86,7 @@ NEW_COMMAND_DEFINE_CAST(CNexusMenuBranchSwapType, mpl_bbreak_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuAddSeqType    , mpl_addseq_t)
 NEW_COMMAND_DEFINE_CAST(CNexusMenuRatchetSearch , bool)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseAt    , mfl_set_collapse_at_t)
-//NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapseZero  , bool)
+//NEW_COMMAND_DEFINE_CAST(CNexusMenuCollapse  , bool)
 NEW_COMMAND_DEFINE(CNexusMenuNumReplicates)
 NEW_COMMAND_DEFINE(CNexusMenuTreeLimit)
 //NEW_COMMAND_DEFINE_CAST(CNexusMenuRatchetSearch , bool)
@@ -132,6 +133,7 @@ CNexusUserInterface::CNexusUserInterface()
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "Analysis"));
     ConfigMenuRatchetSearch();
     m_pMainMenu->AddMenuItem(new CNexusMenuHeuristicSearch ("heuristic"     , "Begin a heuristic search"));
+    m_pMainMenu->AddMenuItem(new CNexusMenuScoreTree       ("scoretrees"    , "Report the score of trees in memory"));
 //    m_pMainMenu->AddMenuItem(new CNexusMenuRatchetSearch   ("ratchet"       , "Toggle ratchet searching"));
 //    m_pMainMenu->AddMenuItem(new CNexusMenuExhaust         ("exhaustive"    , "Begin an exhaustive search"));
 //    m_pMainMenu->AddMenuItem(new CNexusMenuBNB             ("branchbound"   , "Begin a branch-and-bound search"));
@@ -209,7 +211,7 @@ void CNexusUserInterface::ConfigMenuCollapseZero()
     selections["no"] = false;
     selections["min"] = true;
     selections["max"] = true; // TODO: These need MPL codes
-    m_pMainMenu->AddMenuItem(new CNexusMenuCollapseZero     ("collapseZero"  , "Enable collapsing of zero length branches during search", selections));
+    m_pMainMenu->AddMenuItem(new CNexusMenuCollapse     ("collapseZero"  , "Enable collapsing of zero length branches during search", selections));
 }
 
 void CNexusUserInterface::ConfigMenuRatchetSearch()
@@ -797,6 +799,65 @@ bool CNexusUserInterface::fCNexusMenuHeuristicSearch(string *value, int nMappedV
     {
         cout<<"No file open"<<endl;
     }
+    return true;
+}
+
+bool CNexusUserInterface::fCNexusMenuScoreTree      (string *value, int nMappedVal)
+{
+    long i = 0;
+    long ntrees = 0;
+    double score = 0.0;
+    vector<string> tokens;
+    char *p;
+    long index = 0;
+    
+    ParseUserList(tokens, value);
+    
+    ntrees = mpl_get_num_trees(m_mflHandle);
+    if (ntrees == 0) {
+        cout << "No trees in memory." << endl;
+        return true;
+    }
+    
+    if (value->length() == 0)
+    {
+        int res = 0;
+        for (i = 0; i < ntrees; ++i)
+        {
+            if ((res = mpl_score_tree(&score, i, m_mflHandle)))
+            {
+                cout << "Unable to report tree score. Error: " << res << endl;
+            }
+            else
+            {
+                cout << "Tree " << i+1 << ": "<< endl << score << endl << endl;
+            }
+        }
+        
+        return true;
+    }
+    
+    for (i = 0; i < tokens.size(); ++i)
+    {
+        
+        if (!all_of(tokens[i].begin(), tokens[i].end(), ::isdigit))
+        {
+            cout << "Unrecognised index: " << tokens[i] << endl << endl;
+            continue;
+        }
+        
+        index = strtol(tokens[i].c_str(), &p, 10);
+        
+        if (mpl_score_tree(&score, index-1, m_mflHandle)< 0)
+        {
+            cout << "Index out of bounds: " << index << endl << endl;
+        }
+        else
+        {
+            cout << "Tree " << index << ": "<< endl << score << endl << endl;
+        }
+    }
+    
     return true;
 }
 

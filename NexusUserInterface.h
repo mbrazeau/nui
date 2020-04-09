@@ -48,6 +48,7 @@ public:
     bool fCNexusMenuSet            (string *value = NULL, int nMappedVal = -1);
                
     bool fCNexusMenuHeuristicSearch(string *value = NULL, int nMappedVal = -1);
+    bool fCNexusMenuScoreTree      (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuExhaust        (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuBNB            (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuStepwise       (string *value = NULL, int nMappedVal = -1);
@@ -88,7 +89,7 @@ protected:
     void ConfigMenuBranchSwapType();
     void ConfigMenuAddSeqType();
     //void ConfigMenuCollapseAt();
-    //void ConfigMenuCollapseZero();
+    void ConfigMenuCollapseZero();
     void ConfigMenuRatchetSearch();
     void ConfigMenuGap();
 
