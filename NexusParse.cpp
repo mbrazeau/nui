@@ -38,6 +38,13 @@ CNexusParse::~CNexusParse()
     }
 }
 
+bool CNexusParse::ReadTreeFile(string *infname, string *outfname)
+{
+    bool bRet = false;
+    
+    return bRet;
+}
+
 bool CNexusParse::ReadNexusFile(string *infname, string *outfname)
 {
     bool bRet = false;
@@ -47,7 +54,9 @@ bool CNexusParse::ReadNexusFile(string *infname, string *outfname)
      * any memory that happened to work...
      */
     m_cNexusReader = new CNexusReader(infname, outfname);
-    m_cTaxa  = new NxsTaxaBlock();
+    if (!m_cTaxa) { // This lets the reader use a tree file without taxa block, as long as the reader already has a taxa block
+        m_cTaxa  = new NxsTaxaBlock();
+    }
     m_cChars = new NxsCharactersBlock(0, 0);
     m_cData  = new NxsDataBlock(m_cTaxa, 0);
     
@@ -60,17 +69,34 @@ bool CNexusParse::ReadNexusFile(string *infname, string *outfname)
             m_cNexusReader->Add(m_cChars);
             m_cNexusReader->Add(m_cTrees);
             m_cNexusReader->Add(m_cData);
-           
-            istream &iStream = m_cNexusReader->GetInStream();
-            if (iStream)
+
+            // MDB @ CJD: Why is this so complicated? Why not use:
+            try
             {
-                CNexusToken token(iStream, m_cNexusReader->GetOutStream());
-                m_cNexusReader->Execute(token);
-                // TODO: This is a bug. Should probably use exceptions here.
-                if (m_cTaxa->GetNTax() && m_cChars->GetNChar()) {
+                m_cNexusReader->ReadFilepath(infname->c_str(), MultiFormatReader::NEXUS_FORMAT);
+            }
+            catch (...) {
+                m_cNexusReader->DeleteBlocksFromFactories();
+                return bRet;
+            }
+            
+            if (m_cTaxa->GetNTax() && m_cChars->GetNChar()) {
+                bRet = true;
+            }
+            
+            if (m_cNexusReader->GetNumTreesBlocks(m_cTaxa)) {
+                m_cTrees = m_cNexusReader->GetTreesBlock(m_cTaxa, 0);
+                if (m_cTrees->GetNumTrees()) {
                     bRet = true;
                 }
             }
+//            istream &iStream = m_cNexusReader->GetInStream();
+//            if (iStream)
+//            {
+//                CNexusToken token(iStream, m_cNexusReader->GetOutStream());
+//                m_cNexusReader->Execute(token);
+//                // TODO: This is a bug. Should probably use exceptions here.
+//            }
         }
     }
     if (HasDataBlock())
@@ -81,8 +107,12 @@ bool CNexusParse::ReadNexusFile(string *infname, string *outfname)
         }
     }
 
-
     return bRet;
+}
+
+NxsTaxaBlock* CNexusParse::GetNexusTaxaBlock()
+{
+    return m_cNexusReader->GetTaxaBlock(0);
 }
 
 bool CNexusParse::HasDataBlock()

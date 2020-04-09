@@ -48,6 +48,7 @@
  */
 NEW_COMMAND_DEFINE(CNexusMenuSpacer         )
 NEW_COMMAND_DEFINE(CNexusMenuOpenNexusFile  )
+NEW_COMMAND_DEFINE(CNexusMenuOpenTreeFile   )
 NEW_COMMAND_DEFINE(CNexusMenuSaveFile       )
 NEW_COMMAND_DEFINE(CNexusMenuCloseNexusFile )
 
@@ -103,6 +104,7 @@ CNexusUserInterface::CNexusUserInterface()
 {
     m_mflHandle = NULL;
     m_pNexusParse = NULL;
+    m_pNexusInputTrees = NULL;
     m_strCwd = "./";
     m_pMainMenu = new CNexusMenuData("morphy>");
     if (!m_pMainMenu)
@@ -111,6 +113,7 @@ CNexusUserInterface::CNexusUserInterface()
     }
     m_pMainMenu->AddMenuItem(new CNexusMenuSpacer      (NULL, "File"));
     m_pMainMenu->AddMenuItem(new CNexusMenuOpenNexusFile   ("open"          , "Open a nexus file"));
+    m_pMainMenu->AddMenuItem(new CNexusMenuOpenTreeFile    ("gettrees"          , "Open a nexus file"));
     m_pMainMenu->AddMenuItem(new CNexusMenuCloseNexusFile  ("close"         , "Close a nexus file"));
     m_pMainMenu->AddMenuItem(new CNexusMenuSaveFile        ("save"          , "Save according to the options"));
 
@@ -352,6 +355,66 @@ bool CNexusUserInterface::fCNexusMenuOpenNexusFile(string *value, int nMappedVal
     return true;
 }
 
+bool CNexusUserInterface::fCNexusMenuOpenTreeFile(string *value, int nMappedVal)
+{
+    int i = 0;
+    string strFilename = *value;
+    
+    if (m_pNexusParse)
+    {
+        if (strFilename.length() == 0)
+        {
+            m_ioInputFiles->GetUserInput(" Enter filename: " + m_strCwd, &strFilename, true);
+        }
+        
+        if (strFilename.find_first_of("\\/") == string::npos)
+        {
+            strFilename = m_strCwd + strFilename;
+        }
+        
+        m_pNexusInputTrees = new CNexusParse();
+        
+        if (m_pNexusInputTrees)
+        {
+            m_pNexusInputTrees->m_cTaxa = m_pNexusParse->GetNexusTaxaBlock()->Clone();
+
+            if (m_pNexusInputTrees->ReadNexusFile(&strFilename, NULL))
+            {
+                cout<<" "<<strFilename<<" opened successfully"<<endl<<endl;
+                m_pNexusInputTrees->m_cTaxa = NULL;
+                for (i = 0; i < m_pNexusInputTrees->m_cTrees->GetNumTrees(); ++i)
+                {
+                    const NxsFullTreeDescription &t = m_pNexusInputTrees->m_cTrees->GetFullTreeDescription(i);
+                    string newick = t.GetNewick();
+                    newick.append(";");
+                    mpl_add_newick(newick.c_str(), m_mflHandle);
+                }
+                
+                cout << i << " trees successfully read from file" << endl;
+            }
+            else
+            {
+                // TODO: Replace call to fCNexusMenuCloseNexusFile(NULL, false);
+                cout<<" Error: Unable to read "<<strFilename<<endl;
+            }
+            delete m_pNexusInputTrees;
+            m_pNexusInputTrees = NULL;
+        }
+        else
+        {
+            cout<<" Error: Unable to open "<<strFilename<<endl;
+        }
+        
+    }
+    else
+    {
+        cout<<"No file open"<<endl;
+    }
+
+
+    return true;
+}
+
 void CNexusUserInterface::DestroyHandle()
 {
     if (m_mflHandle)
@@ -476,12 +539,26 @@ bool CNexusUserInterface::SaveNewickStrings(myofstream &fSave)
     return true;
 }
 
+
+bool CNexusUserInterface::UserConfirmation()
+{
+    string usrResponse;
+    do {
+        m_ioLogFiles->GetUserInput(" (y,n): ", &usrResponse, false);
+        if (usrResponse.compare("y") == 0 || usrResponse.compare("Y") == 0) {
+            return true;
+        } else if (usrResponse.compare("n") == 0 || usrResponse.compare("N") == 0) {
+            cout << "Aborting." << endl;
+            return false;
+        }
+    } while (1);
+}
+
 bool CNexusUserInterface::fCNexusMenuSaveFile(string *value, int nMappedVal)
 {
     string strFilename = *value;
     string inFilename;
     string usrResponse;
-    bool response = false;
     myofstream fSave;
     struct stat st;
 
@@ -497,15 +574,9 @@ bool CNexusUserInterface::fCNexusMenuSaveFile(string *value, int nMappedVal)
     {
         cout <<"'"<< inFilename <<"'"<< " is already a file, would you like to overwrite?" << endl;
         
-        do {
-            m_ioLogFiles->GetUserInput(" (y,n): ", &usrResponse, false);
-            if (usrResponse.compare("y") == 0 || usrResponse.compare("Y") == 0) {
-                break;
-            } else if (usrResponse.compare("n") == 0 || usrResponse.compare("N") == 0) {
-                cout << "Save aborting." << endl;
-                return true;
-            }
-        } while (response == false);
+        if (!UserConfirmation()) {
+            return true;
+        }
     }
     
     fSave.open(strFilename.c_str());
@@ -541,6 +612,8 @@ bool CNexusUserInterface::fCNexusMenuCloseNexusFile(string *value, int nMappedVa
     {
         delete m_pNexusParse;
         m_pNexusParse = NULL;
+        delete m_pNexusInputTrees;
+        m_pNexusInputTrees = NULL;
         if (bVerbose)
         {
             cout<<" Successfully closed file..."<<endl;

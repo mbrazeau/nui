@@ -28,6 +28,7 @@ public:
         return true;
     }
     bool fCNexusMenuOpenNexusFile  (string *value = NULL, int nMappedVal = -1);
+    bool fCNexusMenuOpenTreeFile   (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuSaveFile       (string *value = NULL, int nMappedVal = -1);
     bool fCNexusMenuCloseNexusFile (string *value = NULL, int nMappedVal = -1, bool bVerbose = true);
                
@@ -85,6 +86,7 @@ protected:
     void UserVerify();
     void SetCharType(const mpl_parsim_t ptype, string *value, int nMappedVal);
     void ParseUserList(vector<string> &tokens, string *value);
+    bool UserConfirmation();
 
     void ConfigMenuBranchSwapType();
     void ConfigMenuAddSeqType();
@@ -98,6 +100,7 @@ private:
     CNexusMenuData *m_pMenu;
 
     CNexusParse *m_pNexusParse;
+    CNexusParse *m_pNexusInputTrees;
     string m_strCwd;
 
     myofstream m_fCommandLog;

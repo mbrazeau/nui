@@ -9,6 +9,8 @@ public:
     CNexusParse();
     ~CNexusParse();
     bool ReadNexusFile(string *infname, string *outfname);
+    bool ReadTreeFile(string *infname, string *outfname);
+    NxsTaxaBlock* GetNexusTaxaBlock();
     void Report();
 
     NxsCharactersBlock  *m_cChars;
