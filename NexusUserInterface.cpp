@@ -670,6 +670,17 @@ bool CNexusUserInterface::fCNexusMenuAbout          (string *value, int nMappedV
     {
         cout<<"Build time: "<<__DATE__<<" "<<__TIME__<<endl;
     }
+#ifdef DEBUG
+    cout<<endl;
+    cout<<endl;
+    cout<<"\t********************************************************"<<endl;
+    cout<<"\t*                                                      *"<<endl;
+    cout<<"\t*                  DEBUGGING BUILD                     *"<<endl;
+    cout<<"\t*                                                      *"<<endl;
+    cout<<"\t********************************************************"<<endl;
+    cout<<endl;
+    cout<<endl;
+#endif
     return true;
 }
 
@@ -810,8 +821,8 @@ void CNexusUserInterface::SetCharType               (const mpl_parsim_t ptype, s
 
 bool CNexusUserInterface::fCNexusMenuOrdered        (string *value, int nMappedVal)
 {
-    cout << "Not implemented" << endl;
-    return true;
+//    cout << "Not implemented" << endl;
+//    return true;
     
     SetCharType(MPL_WAGNER_T, value, nMappedVal);
     
